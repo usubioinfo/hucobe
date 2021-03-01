@@ -1,0 +1,19 @@
+{
+  "name": "hucobackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MusicDev33/hucobe.git"
+  },
+  "author": "Shelby McCowan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MusicDev33/hucobe/issues"
+  },
+  "homepage": "https://github.com/MusicDev33/hucobe#readme"
+}
