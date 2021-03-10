@@ -15,7 +15,12 @@
         "outDir": "dist",
         "baseUrl": "src",
         "paths": {
+          "@classes/*": ["classes/*"],
           "@excel/*": ["excel/*"],
+          "@gentools/*": ["gentools/*"],
+          "@models/*": ["models/*"],
+          "@schemas/*": ["schemas/*"],
+          "@services/*": ["services/*"]
         },
     },
     "include": [
