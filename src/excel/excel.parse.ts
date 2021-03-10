@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 import { IExpression } from '@models/expression.model';
 import ExpressionService from '@services/expression.service';
-import { Expression } from '@schema/expression.schema';
+import { Expression } from '@schemas/expression.schema';
 
 dotenv.config();
 require('dotenv-defaults/config');
@@ -47,16 +47,7 @@ const readExcel = async (fileName: string) => {
   const primaryColumn = workbook.worksheets[0].getColumn(1);
   primaryColumn.eachCell({ includeEmpty: true }, async (cell, rowNum) => {
 
-    let expression: any = new Expression({
-      pathogenProtein: '',
-      isolate: '',
-      pLength: 0,
-      gene: '',
-      hLength: 0,
-      interaction: '',
-      tissueExpression: '',
-      pathogen: ''
-    });
+    let expression: IExpression;
 
     if (rowNum === 1) {
       rowIndex += 1;

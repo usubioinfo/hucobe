@@ -1,5 +1,5 @@
 import { IExpression } from '@models/expression.model';
-import { Expression } from '@schema/expression.schema';
+import { Expression } from '@schemas/expression.schema';
 import { ModelService } from '@classes/model.service.class';
 
 class ExpressionService extends ModelService<IExpression> {

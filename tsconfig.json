@@ -19,7 +19,7 @@
           "@excel/*": ["excel/*"],
           "@gentools/*": ["gentools/*"],
           "@models/*": ["models/*"],
-          "@schema/*": ["schema/*"],
+          "@schemas/*": ["schemas/*"],
           "@services/*": ["services/*"]
         },
     },
