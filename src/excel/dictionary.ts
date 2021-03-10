@@ -20,6 +20,6 @@ export const tissueExpDict: Record<number, string> = {
   3: 'pLength',
   4: 'gene',
   5: 'hLength',
-  6: 'interaction',
+  6: 'interactionType',
   7: 'tissueExpression'
 }
