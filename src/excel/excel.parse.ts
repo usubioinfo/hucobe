@@ -1,5 +1,29 @@
+require('tsconfig-paths/register');
 import Excel from 'exceljs';
 import path from 'path';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+
+import { IExpression } from '@models/expression.model';
+import ExpressionService from '@services/expression.service';
+import { Expression } from '@schema/expression.schema';
+
+dotenv.config();
+require('dotenv-defaults/config');
+
+const db = `mongodb://localhost:27017/${process.env.DB_NAME}`;
+
+mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
+mongoose.connection.on('connected', () => {
+  console.log(`Database Connected: ${db}`);
+});
+
+mongoose.connection.on('error', (err: any) => {
+  console.log('Database Error: ' + err);
+});
 
 const dataPath = path.resolve('hdata');
 
@@ -19,22 +43,11 @@ const readExcel = async (fileName: string) => {
   colDict[6] = 'interaction';
   colDict[7] = 'tissueExpression';
 
-  type Expression = {
-    pathogenProtein: string,
-    isolate: string,
-    pLength: number,
-    gene: string,
-    hLength: number,
-    interaction: string,
-    tissueExpression: string,
-    pathogen: string
-  }
-
   let rowIndex = 1;
   const primaryColumn = workbook.worksheets[0].getColumn(1);
-  primaryColumn.eachCell({ includeEmpty: true }, (cell, rowNum) => {
+  primaryColumn.eachCell({ includeEmpty: true }, async (cell, rowNum) => {
 
-    let expression: Expression = {
+    let expression: any = new Expression({
       pathogenProtein: '',
       isolate: '',
       pLength: 0,
@@ -43,7 +56,7 @@ const readExcel = async (fileName: string) => {
       interaction: '',
       tissueExpression: '',
       pathogen: ''
-    }
+    });
 
     if (rowNum === 1) {
       rowIndex += 1;
@@ -58,8 +71,11 @@ const readExcel = async (fileName: string) => {
       obj[key] = currentRow.getCell(i).value;
     }
 
-    expression = obj;
+    expression = new Expression(obj);
     expression.pathogen = 'SARS-CoV-2';
+
+    await ExpressionService.saveModel(expression);
+
     console.log(expression);
 
     rowIndex += 1;
