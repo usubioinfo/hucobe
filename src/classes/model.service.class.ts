@@ -88,6 +88,16 @@ export class ModelService<P extends Document> {
     }
   }
 
+  public async getDistinct(param: string): Promise<any> {
+		try {
+      const foundModel = await this.HelperClass.distinct(param).exec();
+      return foundModel;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+	}
+
   public async deleteAll(): Promise<any | null> {
     try {
       const deletedAllModels = await this.HelperClass.deleteMany({}).exec();
