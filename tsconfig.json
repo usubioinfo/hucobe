@@ -20,6 +20,7 @@
           "@gentools/*": ["gentools/*"],
           "@models/*": ["models/*"],
           "@schemas/*": ["schemas/*"],
+          "@routes/*": ["routes/*"],
           "@services/*": ["services/*"]
         },
     },
