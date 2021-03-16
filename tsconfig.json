@@ -21,6 +21,7 @@
           "@models/*": ["models/*"],
           "@schemas/*": ["schemas/*"],
           "@routes/*": ["routes/*"],
+          "@config/*": ["config/*"],
           "@services/*": ["services/*"]
         },
     },
