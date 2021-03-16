@@ -40,3 +40,7 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
   return res.status(500).json({success: false, msg: 'Something went wrong.'});
 
 }
+
+export const testRoute = async (req: Request, res: Response) => {
+  return res.send(`${req.params.test}`);
+}

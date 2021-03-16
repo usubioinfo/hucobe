@@ -10,11 +10,13 @@ import cors from 'cors';
 import passport from 'passport';
 import helmet from 'helmet';
 
+import * as Routes from '@config/route-defs';
+
 dotenv.config();
 require('dotenv-defaults/config');
 
 const PORT = process.env.PORT;
-const API_BASE = '';
+const API_BASE = '/';
 const db = `mongodb://localhost:27017/${process.env.DB_NAME}`;
 
 mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -80,6 +82,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+app.use(API_BASE + 'expression', Routes.ExpressionRoutes);
 
 app.get(API_BASE, (req: Request, res: Response) => {
   res.status(404).send('<h1 style="color: blue; text-align: center;">404 Error</h1>');
