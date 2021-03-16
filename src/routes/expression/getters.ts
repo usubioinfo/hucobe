@@ -1,6 +1,7 @@
 import ExpressionService from '@services/expression.service';
 import { Request, Response } from 'express';
 import { IExpression } from '@models/expression.model';
+import cache from 'memory-cache';
 
 type ExpressionReq = {
   pathogenProteins: string[],
@@ -39,6 +40,41 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
 
   return res.status(500).json({success: false, msg: 'Something went wrong.'});
 
+}
+
+export const getTissueAnnotationsRoute = async (req: Request, res: Response) => {
+
+  const cachedAnnotations = cache.get('tissueAnnotations');
+
+  if (cachedAnnotations) {
+    console.log(`Received cached annotations: ${cachedAnnotations}`);
+    return res.json({success: true, payload: cachedAnnotations.split(',')});
+  }
+
+  let annotations = await ExpressionService.getDistinct('tissueExpression');
+
+  annotations = annotations.filter((item: string |  null) => {
+    if (item) {
+      return true;
+    }
+
+    return false;
+  });
+
+  console.log(`Caching annotations: ${annotations}`);
+  cache.put('tissueAnnotations', annotations.join(','), 604800000, async () => {
+    let annotations = await ExpressionService.getDistinct('tissueExpression');
+
+    annotations = annotations.filter((item: string |  null) => {
+      if (item) {
+        return true;
+      }
+
+      return false;
+    });
+  });
+
+  return res.json({success: true, payload: annotations});
 }
 
 export const testRoute = async (req: Request, res: Response) => {
