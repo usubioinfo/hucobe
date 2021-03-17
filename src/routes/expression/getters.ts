@@ -16,6 +16,7 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
 
   // Shallow clone, there are no complex data types used so this is okay
   const body: ExpressionReq = JSON.parse(JSON.stringify(req.body));
+  console.log(body);
 
   const expressions: IExpression[] = [];
 
@@ -29,10 +30,14 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
         gene: gene
       }
       const results = await ExpressionService.findModelsByQuery(query);
-
-      expressions.concat(results as IExpression[]);
+      if (results) {
+        expressions.push(...results);
+      }
     }
   }
+
+  console.log('done')
+  console.log(expressions);
 
   if (expressions.length) {
     return res.status(200).json({success: true, payload: expressions});
