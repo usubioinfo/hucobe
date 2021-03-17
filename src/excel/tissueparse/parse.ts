@@ -41,6 +41,9 @@ export const readExcel = async (fileName: string, sheet: number) => {
     expression = new Expression(obj);
     expression.pathogen = tissueInfo.virus;
     expression.interactionCategory = tissueInfo.interactionCategory;
+    expression.interactionType = expression.interactionType.toLowerCase();
+    expression.pathogen = expression.pathogen.toLowerCase();
+
     await ExpressionService.saveModel(expression);
     // ExpressionService.saveModel(expression).then(result => console.log(result));
 
