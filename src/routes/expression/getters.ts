@@ -26,7 +26,7 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
         pathogen: body.pathogen,
         pathogenProtein: patProtein,
         interactionCategory: body.interactionCategory,
-        interactionType: body.interactionType,
+        interactionType: {'$in': body.interactionType},
         gene: gene
       }
       const results = await ExpressionService.findModelsByQuery(query);
