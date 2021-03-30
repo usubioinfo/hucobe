@@ -8,7 +8,8 @@ type ExpressionReq = {
   pathogen: string,
   interactionCategory: string,
   interactionType: string,
-  genes: string[]
+  genes: string[],
+  tissues: string[]
 }
 
 // this needs a request body, so this is a POST request
@@ -27,7 +28,8 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
         pathogenProtein: patProtein,
         interactionCategory: body.interactionCategory,
         interactionType: {'$in': body.interactionType},
-        gene: gene
+        gene: gene,
+        tissueExpression: {'$in': body.tissues}
       }
       const results = await ExpressionService.findModelsByQuery(query);
       if (results) {
