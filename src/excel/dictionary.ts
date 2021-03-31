@@ -23,3 +23,15 @@ export const tissueExpDict: Record<number, string> = {
   6: 'interactionType',
   7: 'tissueExpression'
 }
+
+export const goEnrichmentDict: Record<number, string> = {
+  1: 'goId',
+  2: 'description',
+  3: 'geneRatio',
+  4: 'bgRation',
+  5: 'pVal',
+  6: 'pAdjust',
+  7: 'qVal',
+  8: 'geneId',
+  9: 'count'
+}

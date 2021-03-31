@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface IGoEnrichment extends Document {
+  pathogen: string,
   goId: string;
   description: string,
   geneRatio: string,

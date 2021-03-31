@@ -2,6 +2,7 @@ import mongoose, { Schema, Model } from 'mongoose';
 import { IGoEnrichment } from '@models/go-enrichment.model';
 
 const GoEnrichmentSchema: Schema = new Schema({
+	pathogen: {type: String, required: true},
 	goId: {type: String, required: true},
 	description: {type: String, required: true},
 	geneRatio: {type: String, required: true},
