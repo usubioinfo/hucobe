@@ -1,10 +1,10 @@
 import Excel from 'exceljs';
 
-import { IGoEnrichment } from '@models/go-enrichment.model';
-import GoEnrichmentService from '@services/go-enrichment.service';
-import { GoEnrichment } from '@schemas/go-enrichment.schema';
+import { IKeggEnrichment } from '@models/kegg-enrichment.model';
+import KeggEnrichmentService from '@services/kegg-enrichment.service';
+import { KeggEnrichment } from '@schemas/kegg-enrichment.schema';
 
-import { goEnrichmentDict, sheetDict } from '@excel/dictionary';
+import { keggEnrichmentDict, sheetDict } from '@excel/dictionary';
 
 export const readExcel = async (fileName: string, sheet: number) => {
   const workbook = new Excel.Workbook();
@@ -23,7 +23,7 @@ export const readExcel = async (fileName: string, sheet: number) => {
   console.log(maxRowNum);
 
   for (let i = 1; i < maxRowNum + 1; i++) {
-    let enrichment: IGoEnrichment;
+    let enrichment: IKeggEnrichment;
 
     if (i === 1) {
       rowIndex += 1;
@@ -33,17 +33,17 @@ export const readExcel = async (fileName: string, sheet: number) => {
     const currentRow = workbook.worksheets[sheet].getRow(rowIndex);
     const obj: any = {};
     for (let i = 1; i < 10; i++) {
-      const key = goEnrichmentDict[i];
+      const key = keggEnrichmentDict[i];
 
       obj[key] = currentRow.getCell(i).value;
     }
 
-    enrichment = new GoEnrichment(obj);
+    enrichment = new KeggEnrichment(obj);
     enrichment.pathogen = enrichmentInfo.virus;
     enrichment.pathogen = enrichment.pathogen.toLowerCase();
 
-    // await GoEnrichmentService.saveModel(enrichment);
-    // GoEnrichmentService.saveModel(expression).then(result => console.log(result));
+    // await KeggEnrichmentService.saveModel(enrichment);
+    // KeggEnrichmentService.saveModel(expression).then(result => console.log(result));
 
     console.log(enrichment);
     console.log(rowIndex);
