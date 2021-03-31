@@ -11,6 +11,7 @@
     "excel": "ts-node-dev --respawn src/excel/start.ts",
     "generate:schemas": "ts-node src/schema.generate.ts",
     "generate:services": "ts-node src/service.generate.ts",
+    "generate:all": "ts-node src/schema.generate.ts && ts-node src/service.generate.ts",
     "update": "git pull origin main && npm i && pm2 restart hbe"
   },
   "repository": {

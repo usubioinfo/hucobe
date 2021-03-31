@@ -2,7 +2,7 @@ require('tsconfig-paths/register');
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
-import { readExcel } from './tissueparse/parse';
+import { readExcel } from './goparse/parse';
 
 dotenv.config();
 require('dotenv-defaults/config');
@@ -25,10 +25,8 @@ const dataPath = path.resolve('hdata');
 
 const readAllExcel = async () => {
   for (let i = 0; i < 7; i++) {
-    await readExcel(`${dataPath}/TissueExpressions.xlsx`, i)
+    await readExcel(`${dataPath}/GO_Enrichment.xlsx`, i)
   }
 }
 
 readAllExcel();
-
-// (async () => {await readExcel(`${dataPath}/TissueExpressions.xlsx`, 0)})();

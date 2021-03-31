@@ -1,0 +1,18 @@
+import mongoose, { Schema, Model } from 'mongoose';
+import { IGoEnrichment } from '@models/go-enrichment.model';
+
+const GoEnrichmentSchema: Schema = new Schema({
+	goId: {type: String, required: true},
+	description: {type: String, required: true},
+	geneRatio: {type: String, required: true},
+	bgRatio: {type: String, required: true},
+	pVal: {type: String, required: true},
+	pAdjust: {type: String, required: true},
+	qVal: {type: String, required: true},
+	geneId: {type: String, required: true},
+	count: {type: Number, required: true}
+},{
+	minimize: false
+});
+
+export const GoEnrichment: Model<IGoEnrichment> = mongoose.model<IGoEnrichment>('GoEnrichment', GoEnrichmentSchema);
