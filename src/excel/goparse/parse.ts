@@ -42,7 +42,7 @@ export const readExcel = async (fileName: string, sheet: number) => {
     enrichment.pathogen = enrichmentInfo.virus;
     enrichment.pathogen = enrichment.pathogen.toLowerCase();
 
-    // await GoEnrichmentService.saveModel(enrichment);
+    await GoEnrichmentService.saveModel(enrichment);
     // GoEnrichmentService.saveModel(expression).then(result => console.log(result));
 
     console.log(enrichment);
