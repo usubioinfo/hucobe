@@ -47,3 +47,12 @@ export const keggEnrichmentDict: Record<number, string> = {
   8: 'geneId',
   9: 'count'
 }
+
+export const interactionDict: Record<number, string> = {
+  1: 'pathogen',
+  2: 'isolate',
+  3: 'pLength',
+  4: 'gene',
+  5: 'hLength',
+  6: 'interaction'
+}
