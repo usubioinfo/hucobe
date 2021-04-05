@@ -1,8 +1,8 @@
 import Excel from 'exceljs';
 
-import { IGoEnrichment } from '@models/go-enrichment.model';
-import GoEnrichmentService from '@services/go-enrichment.service';
-import { GoEnrichment } from '@schemas/go-enrichment.schema';
+import { IInteraction } from '@models/interaction.model';
+import InteractionService from '@services/interaction.service';
+import { Interaction } from '@schemas/interaction.schema';
 
 import { interactionDict, sheetDict } from '@excel/dictionary';
 
@@ -12,7 +12,7 @@ export const readExcel = async (fileName: string, sheet: number) => {
 
   let rowIndex = 1;
   const primaryColumn = workbook.worksheets[sheet].getColumn(1);
-  const enrichmentInfo = sheetDict[sheet];
+  const interactionInfo = sheetDict[sheet];
 
   let maxRowNum = 0;
 
@@ -23,7 +23,7 @@ export const readExcel = async (fileName: string, sheet: number) => {
   console.log(maxRowNum);
 
   for (let i = 1; i < maxRowNum + 1; i++) {
-    let enrichment: IGoEnrichment;
+    let interaction: IInteraction;
 
     if (i === 1) {
       rowIndex += 1;
@@ -32,20 +32,20 @@ export const readExcel = async (fileName: string, sheet: number) => {
 
     const currentRow = workbook.worksheets[sheet].getRow(rowIndex);
     const obj: any = {};
-    for (let i = 1; i < 10; i++) {
+    const numKeys = 6;
+    for (let i = 1; i < numKeys + 1; i++) {
       const key = interactionDict[i];
 
       obj[key] = currentRow.getCell(i).value;
     }
 
-    enrichment = new GoEnrichment(obj);
-    enrichment.pathogen = enrichmentInfo.virus;
-    enrichment.pathogen = enrichment.pathogen.toLowerCase();
+    interaction = new Interaction(obj);
+    interaction.pathogen = interactionInfo.virus;
+    interaction.pathogen = interaction.pathogen.toLowerCase();
 
-    await GoEnrichmentService.saveModel(enrichment);
-    // GoEnrichmentService.saveModel(expression).then(result => console.log(result));
+    await InteractionService.saveModel(interaction);
 
-    console.log(enrichment);
+    console.log(interaction);
     console.log(rowIndex);
 
     rowIndex += 1;
