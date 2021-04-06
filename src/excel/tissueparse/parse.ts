@@ -6,7 +6,7 @@ import { Expression } from '@schemas/expression.schema';
 
 import { tissueExpDict, sheetDict } from '@excel/dictionary';
 
-export const readExcel = async (fileName: string, sheet: number) => {
+export const readExcelTissue = async (fileName: string, sheet: number) => {
   const workbook = new Excel.Workbook();
   await workbook.xlsx.readFile(fileName);
 

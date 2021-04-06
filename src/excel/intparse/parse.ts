@@ -6,7 +6,7 @@ import { Interaction } from '@schemas/interaction.schema';
 
 import { interactionDict, sheetDict } from '@excel/dictionary';
 
-export const readExcel = async (fileName: string, sheet: number) => {
+export const readExcelInt = async (fileName: string, sheet: number) => {
   const workbook = new Excel.Workbook();
   await workbook.xlsx.readFile(fileName);
 

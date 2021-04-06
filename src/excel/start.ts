@@ -3,12 +3,12 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 
-import { readExcel } from './intparse/parse';
+import { parseDict } from './dictionary';
 
 dotenv.config();
 require('dotenv-defaults/config');
 
-const FILE = process.env.FILE;
+const FILE = process.env.FILE as string;
 
 const db = `mongodb://localhost:27017/${process.env.DB_NAME}`;
 
@@ -28,7 +28,7 @@ const dataPath = path.resolve('hdata');
 
 const readAllExcel = async () => {
   for (let i = 0; i < 7; i++) {
-    await readExcel(`${dataPath}/${FILE}`, i);
+    await parseDict[FILE](`${dataPath}/${FILE}`, i);
   }
 }
 

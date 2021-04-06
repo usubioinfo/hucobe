@@ -45,7 +45,7 @@ export const createSuppData = async () => {
   console.log(mfResults);
 }
 
-export const readExcel = async (fileName: string, sheet: number) => {
+export const readExcelGo = async (fileName: string, sheet: number) => {
   const workbook = new Excel.Workbook();
   await workbook.xlsx.readFile(fileName);
 

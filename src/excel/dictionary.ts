@@ -1,3 +1,8 @@
+import { readExcelInt } from './intparse/parse';
+import { readExcelGo } from './goparse/parse';
+import { readExcelKegg } from './keggparse/parse';
+import { readExcelTissue } from './tissueparse/parse';
+
 
 type TissueExpInfo = {
   virus: string,
@@ -55,4 +60,11 @@ export const interactionDict: Record<number, string> = {
   4: 'gene',
   5: 'hLength',
   6: 'interaction'
+}
+
+export const parseDict: Record<string, (fileName: string, sheet: number) => Promise<void>> = {
+  'GO_Enrichment.xlsx': readExcelGo,
+  'KEGG_Enrichment.xlsx': readExcelKegg,
+  'Interactions.xlsx': readExcelInt,
+  'TissueExpressions.xlsx': readExcelTissue
 }

@@ -6,7 +6,7 @@ import { KeggEnrichment } from '@schemas/kegg-enrichment.schema';
 
 import { keggEnrichmentDict, sheetDict } from '@excel/dictionary';
 
-export const readExcel = async (fileName: string, sheet: number) => {
+export const readExcelKegg = async (fileName: string, sheet: number) => {
   const workbook = new Excel.Workbook();
   await workbook.xlsx.readFile(fileName);
 
