@@ -39,9 +39,10 @@ export const readExcel = async (fileName: string, sheet: number) => {
       obj[key] = currentRow.getCell(i).value;
     }
 
+    obj['pathogen'] = '';
+
     interaction = new Interaction(obj);
-    interaction.pathogen = interactionInfo.virus;
-    interaction.pathogen = interaction.pathogen.toLowerCase();
+    interaction.pathogen = interactionInfo.virus.toLowerCase();;
 
     await InteractionService.saveModel(interaction);
 

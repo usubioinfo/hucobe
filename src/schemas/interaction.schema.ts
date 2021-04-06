@@ -2,6 +2,7 @@ import mongoose, { Schema, Model } from 'mongoose';
 import { IInteraction } from '@models/interaction.model';
 
 const InteractionSchema: Schema = new Schema({
+	pathogenProtein: {type: String, required: true},
 	pathogen: {type: String, required: true},
 	isolate: {type: String, required: true},
 	pLength: {type: String, required: true},

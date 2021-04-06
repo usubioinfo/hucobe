@@ -3,11 +3,12 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 
-const FILE = 'GO_Enrichment.xlsx';
-import { readExcel } from './goparse/parse';
+import { readExcel } from './intparse/parse';
 
 dotenv.config();
 require('dotenv-defaults/config');
+
+const FILE = process.env.FILE;
 
 const db = `mongodb://localhost:27017/${process.env.DB_NAME}`;
 
@@ -31,4 +32,8 @@ const readAllExcel = async () => {
   }
 }
 
-readAllExcel();
+(async () => {
+  await readAllExcel();
+  console.log('All finished!');
+  process.exit(0);
+})();

@@ -49,7 +49,7 @@ export const keggEnrichmentDict: Record<number, string> = {
 }
 
 export const interactionDict: Record<number, string> = {
-  1: 'pathogen',
+  1: 'pathogenProtein',
   2: 'isolate',
   3: 'pLength',
   4: 'gene',

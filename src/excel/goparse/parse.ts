@@ -7,8 +7,6 @@ import { IGoEnrichment } from '@models/go-enrichment.model';
 import GoEnrichmentService from '@services/go-enrichment.service';
 import { GoEnrichment } from '@schemas/go-enrichment.schema';
 
-import InteractionService from '@services/interaction.service';
-
 import { goEnrichmentDict, sheetDict } from '@excel/dictionary';
 
 const dataPath = path.resolve('hdata');
