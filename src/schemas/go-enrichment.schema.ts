@@ -11,7 +11,8 @@ const GoEnrichmentSchema: Schema = new Schema({
 	pAdjust: {type: String, required: true},
 	qVal: {type: String, required: true},
 	geneId: {type: String, required: true},
-	count: {type: Number, required: true}
+	count: {type: Number, required: true},
+	category: {type: String, required: true}
 },{
 	minimize: false
 });

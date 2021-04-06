@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 
-const FILE = 'Interactions.xlsx';
-import { readExcel } from './intparse/parse';
+const FILE = 'GO_Enrichment.xlsx';
+import { readExcel } from './goparse/parse';
 
 dotenv.config();
 require('dotenv-defaults/config');
