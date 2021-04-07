@@ -19,8 +19,11 @@ export class ModelService<P extends Document> {
     }
   }
 
-  public async saveChangedModel(changedModel: P, changedParam: string): Promise<string> {
-    changedModel.markModified(changedParam);
+  public async saveChangedModel(changedModel: P, changedParam: string[]): Promise<string> {
+
+    changedParam.forEach(param => {
+      changedModel.markModified(param);
+    });
 
     try {
       const savedModel = await changedModel.save();
@@ -68,9 +71,9 @@ export class ModelService<P extends Document> {
     }
   }
 
-  public async findOneModelByQuery(query: any, sort: any = {_id: 1}, limit: number = 30): Promise<P | null> {
+  public async findOneModelByQuery(query: any, sort: any = {_id: 1}): Promise<P | null> {
     try {
-      const foundModel = await this.HelperClass.findOne(query).sort(sort).limit(limit).exec();
+      const foundModel = await this.HelperClass.findOne(query).sort(sort).exec();
       return foundModel;
     } catch (err) {
       console.log(err);

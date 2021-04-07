@@ -1,6 +1,13 @@
 import ExpressionService from '@services/expression.service';
 import { Request, Response } from 'express';
 import { IExpression } from '@models/expression.model';
+
+import ExpResultService from '@services/exp-result.service';
+import { ExpResult } from '@schemas/exp-result.schema';
+import { IExpResult } from '@models/exp-result.model';
+
+import { performance } from 'perf_hooks';
+
 import cache from 'memory-cache';
 
 type ExpressionReq = {
@@ -12,6 +19,18 @@ type ExpressionReq = {
   tissues: string[]
 }
 
+export const getExpResultIdRoute = async (req: Request, res: Response) => {
+  let expResult = new ExpResult({
+    expressions: [],
+    createdAt: new Date(),
+    reqTime: 0
+  });
+
+  const saved = await ExpResultService.saveModel(expResult) as IExpResult;
+
+  res.json({success: true, payload: saved._id});
+}
+
 // this needs a request body, so this is a POST request
 export const getExpressionsByParamsRoute = async (req: Request, res: Response) => {
 
@@ -20,6 +39,8 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
   console.log(body);
 
   const expressions: IExpression[] = [];
+  let expResult = await ExpResultService.findOneModelByQuery({_id: req.body.expId}) as IExpResult;
+  const time0 = performance.now();
 
   for (let gene of body.genes) {
     for (let patProtein of body.pathogenProteins) {
@@ -37,6 +58,13 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
       }
     }
   }
+
+  const time1 = performance.now();
+
+  expResult.reqTime = time1 - time0;
+  expResult.expressions = expressions;
+
+  await ExpResultService.saveChangedModel(expResult, ['reqTime', 'expressions']);
 
   console.log('done')
   console.log(expressions);
@@ -69,7 +97,8 @@ export const getTissueAnnotationsRoute = async (req: Request, res: Response) => 
   });
 
   console.log(`Caching annotations: ${annotations}`);
-  cache.put('tissueAnnotations', annotations.join(','), 604800000, async () => {
+  let millisInAWeek = 604800000;
+  cache.put('tissueAnnotations', annotations.join(','), millisInAWeek, async () => {
     let annotations = await ExpressionService.getDistinct('tissueExpression');
 
     annotations = annotations.filter((item: string |  null) => {
