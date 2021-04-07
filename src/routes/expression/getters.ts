@@ -31,6 +31,18 @@ export const getExpResultIdRoute = async (req: Request, res: Response) => {
   res.json({success: true, payload: saved._id});
 }
 
+export const getExpResultRoute = async (req: Request, res: Response) => {
+  const expResultId = req.params.id;
+
+  const result = await ExpResultService.findOneModelByQuery({_id: expResultId});
+
+  if (result) {
+    return res.json({success: true, payload: result});
+  }
+
+  return res.json({success: false, msg: 'Reult does not exist!'});
+}
+
 // this needs a request body, so this is a POST request
 export const getExpressionsByParamsRoute = async (req: Request, res: Response) => {
 
