@@ -34,13 +34,17 @@ export const getExpResultIdRoute = async (req: Request, res: Response) => {
 export const getExpResultRoute = async (req: Request, res: Response) => {
   const expResultId = req.params.id;
 
+  if (!expResultId) {
+    return res.json({success: false, msg: 'Invalid ID!'});
+  }
+
   const result = await ExpResultService.findOneModelByQuery({_id: expResultId});
 
   if (result) {
     return res.json({success: true, payload: result});
   }
 
-  return res.json({success: false, msg: 'Reult does not exist!'});
+  return res.json({success: false, msg: 'Result does not exist!'});
 }
 
 // this needs a request body, so this is a POST request
