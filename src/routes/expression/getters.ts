@@ -58,23 +58,20 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
   let expResult = await ExpResultService.findOneModelByQuery({_id: req.body.expId}) as IExpResult;
   const time0 = performance.now();
 
-  for (let gene of body.genes) {
-    for (let patProtein of body.pathogenProteins) {
-      const query = {
-        pathogen: body.pathogen,
-        pathogenProtein: patProtein,
-        interactionCategory: body.interactionCategory,
-        interactionType: {'$in': body.interactionType},
-        gene: gene,
-        tissueExpression: {'$in': body.tissues}
-      }
-      const results = await ExpressionService.findModelsByQuery(query);
-      if (results) {
-        expressions.push(...results);
-      }
-    }
+  const query = {
+    pathogen: body.pathogen,
+    pathogenProtein: {'$in': body.pathogenProteins},
+    interactionCategory: body.interactionCategory,
+    interactionType: {'$in': body.interactionType},
+    gene: {'$in': body.genes},
+    tissueExpression: {'$in': body.tissues}
   }
 
+  const results = await ExpressionService.findModelsByQuery(query);
+  if (results) {
+    expressions.push(...results);
+  }
+  
   const time1 = performance.now();
 
   expResult.reqTime = time1 - time0;
