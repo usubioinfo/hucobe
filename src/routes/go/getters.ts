@@ -14,3 +14,16 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
 
   return res.json({success: true, count});
 }
+
+export const createGoIndexRoute = async (req: Request, res: Response) => {
+  let en = await GoService.findModelsByQuery({}, {}, 19000) as IGoEnrichment[];
+
+  let count = en.length;
+
+  for (let enrichment of en) {
+    enrichment.genes = enrichment.geneId.split('/');
+    await GoService.saveChangedModel(enrichment, ['genes']);
+  }
+
+  return res.json({success: true, count});
+}

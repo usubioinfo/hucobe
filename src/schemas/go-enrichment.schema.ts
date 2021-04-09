@@ -13,7 +13,8 @@ const GoEnrichmentSchema: Schema = new Schema({
 	geneId: {type: String, required: true},
 	genes: [{type: String, required: true}],
 	count: {type: Number, required: true},
-	category: {type: String, required: true}
+	category: {type: String, required: true},
+	interactionCategory: {type: String, required: true}
 },{
 	minimize: false
 });

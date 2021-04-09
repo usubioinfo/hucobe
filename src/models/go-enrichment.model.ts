@@ -12,5 +12,6 @@ export interface IGoEnrichment extends Document {
   geneId: string,
   genes: string[],
   count: number,
-  category: string
+  category: string,
+  interactionCategory: string
 }
