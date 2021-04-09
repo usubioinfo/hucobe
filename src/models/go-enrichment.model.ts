@@ -10,6 +10,7 @@ export interface IGoEnrichment extends Document {
   pAdjust: string,
   qVal: string,
   geneId: string,
+  genes: string[],
   count: number,
   category: string
 }

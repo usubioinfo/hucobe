@@ -106,10 +106,12 @@ export const readExcelGo = async (fileName: string, sheet: number) => {
     }
 
     obj['category'] = '';
+    obj['genes'] = [];
 
     enrichment = new GoEnrichment(obj);
     enrichment.pathogen = enrichmentInfo.virus;
     enrichment.pathogen = enrichment.pathogen.toLowerCase();
+    enrichment.genes = enrichment.geneId.split('/');
 
     if (!enrichment.geneRatio.includes('/')) {
       enrichment.geneRatio = '###';
