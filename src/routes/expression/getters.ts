@@ -2,9 +2,8 @@ import ExpressionService from '@services/expression.service';
 import { Request, Response } from 'express';
 import { IExpression } from '@models/expression.model';
 
-import ExpResultService from '@services/exp-result.service';
-import { ExpResult } from '@schemas/exp-result.schema';
-import { IExpResult } from '@models/exp-result.model';
+import ResultService from '@services/result.service';
+import { IResult } from '@models/result.model';
 
 import { performance } from 'perf_hooks';
 
@@ -19,34 +18,6 @@ type ExpressionReq = {
   tissues: string[]
 }
 
-export const getExpResultIdRoute = async (req: Request, res: Response) => {
-  let expResult = new ExpResult({
-    expressions: [],
-    createdAt: new Date(),
-    reqTime: 0
-  });
-
-  const saved = await ExpResultService.saveModel(expResult) as IExpResult;
-
-  res.json({success: true, payload: saved._id});
-}
-
-export const getExpResultRoute = async (req: Request, res: Response) => {
-  const expResultId = req.params.id;
-
-  if (!expResultId) {
-    return res.json({success: false, msg: 'Invalid ID!'});
-  }
-
-  const result = await ExpResultService.findOneModelByQuery({_id: expResultId});
-
-  if (result) {
-    return res.json({success: true, payload: result});
-  }
-
-  return res.json({success: false, msg: 'Result does not exist!'});
-}
-
 // this needs a request body, so this is a POST request
 export const getExpressionsByParamsRoute = async (req: Request, res: Response) => {
 
@@ -55,7 +26,7 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
   console.log(body);
 
   const expressions: IExpression[] = [];
-  let expResult = await ExpResultService.findOneModelByQuery({_id: req.body.expId}) as IExpResult;
+  let result = await ResultService.findOneModelByQuery({_id: req.body.expId}) as IResult;
   const time0 = performance.now();
 
   const query = {
@@ -71,13 +42,13 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
   if (results) {
     expressions.push(...results);
   }
-  
+
   const time1 = performance.now();
 
-  expResult.reqTime = time1 - time0;
-  expResult.expressions = expressions;
+  result.reqTime = time1 - time0;
+  result.results = expressions;
 
-  await ExpResultService.saveChangedModel(expResult, ['reqTime', 'expressions']);
+  await ResultService.saveChangedModel(result, ['reqTime', 'expressions']);
 
   console.log('done')
   console.log(expressions);
