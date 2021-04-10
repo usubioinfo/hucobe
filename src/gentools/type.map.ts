@@ -1,4 +1,4 @@
-const genericObjects = ['IExpression', 'IGoEnrichment', 'IKeggEnrichment', 'Any', 'any'];
+const genericObjects = ['IExpression', 'IGoEnrichment', 'IKeggEnrichment', 'Any', 'any', 'IExpression[] | IGoEnrichment[] | IKeggEnrichment[]'];
 
 export const getMongooseString = (jsType: string, additionalOptions: string): string => {
   if (!jsType.includes('[]')) {

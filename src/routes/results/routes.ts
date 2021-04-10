@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import * as RouteFunctions from './export';
 
-router.get('/index', RouteFunctions.createGoIndexRoute);
-router.get('/new', RouteFunctions.getGoEnrichmentRoute);
+router.post('/new', RouteFunctions.getResultIdRoute);
+router.get('/id/:id', RouteFunctions.getResultRoute);
 
 export default router;

@@ -3,16 +3,22 @@ import { Request, Response } from 'express';
 import { IGoEnrichment } from '@models/go-enrichment.model';
 
 export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
-  let en = await GoService.findModelsByQuery({}, {}, 19000) as IGoEnrichment[];
+  const body = req.body;
 
-  let count = en.length;
+  const query = {
+    pathogen: body.pathogen,
+    interactionCategory: body.interactionCategory,
+    gene: { '$in': body.genes },
+    category: { '$in': body.category }
+  };
 
-  for (let enrichment of en) {
-    enrichment.genes = enrichment.geneId.split('/');
-    await GoService.saveChangedModel(enrichment, ['genes']);
+  const enrichments = await GoService.findModelsByQuery(query, {}, 19000);
+
+  if (!enrichments) {
+    return res.status(500).json({success: false, msg: 'Request failed'});
   }
 
-  return res.json({success: true, count});
+  return res.json({success: true, payload: enrichments});
 }
 
 export const createGoIndexRoute = async (req: Request, res: Response) => {
