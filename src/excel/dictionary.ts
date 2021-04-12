@@ -59,7 +59,7 @@ export const interactionDict: Record<number, string> = {
   3: 'pLength',
   4: 'gene',
   5: 'hLength',
-  6: 'interaction'
+  6: 'interactionType'
 }
 
 export const parseDict: Record<string, (fileName: string, sheet: number) => Promise<void>> = {

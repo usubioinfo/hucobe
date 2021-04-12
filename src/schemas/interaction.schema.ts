@@ -8,7 +8,8 @@ const InteractionSchema: Schema = new Schema({
 	pLength: {type: String, required: true},
 	gene: {type: String, required: true},
 	hLength: {type: String, required: true},
-	interaction: {type: String, required: true}
+	interactionType: {type: String, required: true},
+	interactionCategory: {type: String, required: true}
 },{
 	minimize: false
 });

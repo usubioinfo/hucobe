@@ -7,5 +7,6 @@ export interface IInteraction extends Document {
   pLength: string,
   gene: string,
   hLength: string,
-  interaction: string
+  interactionType: string,
+  interactionCategory: string
 }

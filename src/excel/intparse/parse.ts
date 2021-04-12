@@ -42,7 +42,11 @@ export const readExcelInt = async (fileName: string, sheet: number) => {
     obj['pathogen'] = '';
 
     interaction = new Interaction(obj);
-    interaction.pathogen = interactionInfo.virus.toLowerCase();;
+    interaction.pathogen = interactionInfo.virus.toLowerCase();
+    interaction.interactionCategory = interactionInfo.interactionCategory;
+    if (interaction.interactionType) {
+      interaction.interactionType = interaction.interactionType.toLowerCase();
+    }
 
     await InteractionService.saveModel(interaction);
 
