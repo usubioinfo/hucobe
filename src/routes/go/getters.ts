@@ -47,6 +47,8 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
   result.reqTime = time1 - time0;
   result.results = enrichments;
 
+  await ResultService.saveChangedModel(result, ['reqTime', 'results']);
+
   return res.json({success: true, payload: {enrichments, interactions}});
 }
 
