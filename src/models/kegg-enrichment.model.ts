@@ -10,5 +10,7 @@ export interface IKeggEnrichment extends Document {
   pAdjust: string,
   qVal: string,
   geneId: string,
-  count: number
+  count: number,
+  genes: string[],
+  interactionCategory: string
 }

@@ -32,6 +32,7 @@ export const readExcelKegg = async (fileName: string, sheet: number) => {
 
     const currentRow = workbook.worksheets[sheet].getRow(rowIndex);
     const obj: any = {};
+    obj['genes'] = [];
     for (let i = 1; i < 10; i++) {
       const key = keggEnrichmentDict[i];
 
@@ -41,6 +42,12 @@ export const readExcelKegg = async (fileName: string, sheet: number) => {
     enrichment = new KeggEnrichment(obj);
     enrichment.pathogen = enrichmentInfo.virus;
     enrichment.pathogen = enrichment.pathogen.toLowerCase();
+    enrichment.genes = enrichment.geneId.split('/');
+    enrichment.interactionCategory = enrichmentInfo.interactionCategory;
+
+    if (!enrichment.geneRatio.includes('/')) {
+      enrichment.geneRatio = '###';
+    }
 
     await KeggEnrichmentService.saveModel(enrichment);
     // KeggEnrichmentService.saveModel(expression).then(result => console.log(result));
