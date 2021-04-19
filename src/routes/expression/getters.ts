@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+
 import ExpressionService from '@services/expression.service';
 import { Request, Response } from 'express';
 import { IExpression } from '@models/expression.model';
@@ -6,6 +8,10 @@ import ResultService from '@services/result.service';
 import { IResult } from '@models/result.model';
 
 import { performance } from 'perf_hooks';
+dotenv.config();
+require('dotenv-defaults/config');
+
+const CACHE_TIME = parseInt((process.env.ANNOTATION_CACHE_TIME as string));
 
 import cache from 'memory-cache';
 
@@ -66,7 +72,7 @@ export const getTissueAnnotationsRoute = async (req: Request, res: Response) => 
   const cachedAnnotations = cache.get('tissueAnnotations');
 
   if (cachedAnnotations) {
-    console.log(`Received cached annotations: ${cachedAnnotations}`);
+    console.log(`Received cached tissue annotations.`);
     return res.json({success: true, payload: cachedAnnotations.split(',')});
   }
 
@@ -80,9 +86,8 @@ export const getTissueAnnotationsRoute = async (req: Request, res: Response) => 
     return false;
   });
 
-  console.log(`Caching annotations: ${annotations}`);
-  let millisInAWeek = 604800000;
-  cache.put('tissueAnnotations', annotations.join(','), millisInAWeek, async () => {
+  console.log(`Caching tissue annotations.`);
+  cache.put('tissueAnnotations', annotations.join(','), CACHE_TIME, async () => {
     let annotations = await ExpressionService.getDistinct('tissueExpression');
 
     annotations = annotations.filter((item: string |  null) => {

@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+
 import { Request, Response } from 'express';
 import GoService from '@services/go-enrichment.service';
 import { IGoEnrichment } from '@models/go-enrichment.model';
@@ -8,7 +10,13 @@ import { IInteraction } from '@models/interaction.model';
 import ResultService from '@services/result.service';
 import { IResult } from '@models/result.model';
 
+import cache from 'memory-cache';
+
 import { performance } from 'perf_hooks';
+dotenv.config();
+require('dotenv-defaults/config');
+
+const CACHE_TIME = parseInt((process.env.ANNOTATION_CACHE_TIME as string));
 
 export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
   const body = req.body;
@@ -52,20 +60,37 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
   return res.json({success: true, payload: {enrichments, interactions}});
 }
 
-export const createGoIndexRoute = async (req: Request, res: Response) => {
+export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
+  const cachedAnnotations = cache.get('goDesc');
 
-  if (!req.body.password || req.body.password !== '23fafjkg') {
-    return res.status(401).json({success: false, msg: 'Unauthorized'});
+  if (cachedAnnotations) {
+    console.log(`Received cached GO annotations.`);
+    return res.json({success: true, payload: cachedAnnotations.split(',')});
   }
 
-  let en = await GoService.findModelsByQuery({}, {}, 19000) as IGoEnrichment[];
+  let annotations = await GoService.getDistinct('description');
 
-  let count = en.length;
+  annotations = annotations.filter((item: string |  null) => {
+    if (item) {
+      return true;
+    }
 
-  for (let enrichment of en) {
-    enrichment.genes = enrichment.geneId.split('/');
-    await GoService.saveChangedModel(enrichment, ['genes']);
-  }
+    return false;
+  });
 
-  return res.json({success: true, count});
+  console.log(`Caching GO annotations.`);
+
+  cache.put('goDesc', annotations.join(','), CACHE_TIME, async () => {
+    let annotations = await GoService.getDistinct('tissueExpression');
+
+    annotations = annotations.filter((item: string |  null) => {
+      if (item) {
+        return true;
+      }
+
+      return false;
+    });
+  });
+
+  return res.json({success: true, payload: annotations});
 }
