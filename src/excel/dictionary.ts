@@ -19,6 +19,12 @@ export const sheetDict: Record<number, TissueExpInfo> = {
   6: {virus: 'N/A', interactionCategory: 'common'}
 }
 
+export const localizationSheetDict: Record<number, string> = {
+  0: 'sars-cov-2',
+  1: 'sars-cov',
+  2: 'mers'
+}
+
 export const tissueExpDict: Record<number, string> = {
   1: 'pathogenProtein',
   2: 'isolate',
@@ -51,6 +57,14 @@ export const keggEnrichmentDict: Record<number, string> = {
   7: 'qVal',
   8: 'geneId',
   9: 'count'
+}
+
+export const localDict: Record<number, string> = {
+  1: 'host',
+  2: 'interactions',
+  3: 'gene',
+  4: 'geneId',
+  5: 'location'
 }
 
 export const interactionDict: Record<number, string> = {
