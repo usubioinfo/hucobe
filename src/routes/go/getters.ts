@@ -98,9 +98,17 @@ export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
 export const searchGoAnnotationsRoute = async (req: Request, res: Response) => {
   const body = req.body;
 
-  const query = { '$text': { '$search': body.searchTerms } };
+  let query = { '$text': { '$search': body.searchTerms, '$caseSensitive': false } };
 
-  let terms = await GoService.findModelsByQuery(query, {}, 60);
+  let results = await GoService.findModelsByQuery(query, {}, 100) as IGoEnrichment[];
+  console.log(results);
+  let terms = results.map(enrichment => {
+    return `${enrichment.goId} - ${enrichment.description}`;
+  });
+
+  terms = [...new Set(terms)];
+
+  console.log(terms);
 
   return res.json({success: true, payload: terms});
 }
