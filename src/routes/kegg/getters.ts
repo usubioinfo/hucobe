@@ -22,17 +22,23 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
   let result = await ResultService.findOneModelByQuery({_id: body.expId}) as IResult;
   const time0 = performance.now();
 
-  const query = {
+  const query: any = {
     pathogen: body.pathogen,
     interactionCategory: body.interactionCategory,
     genes: { '$in': body.genes }
+  }
+
+  if (body.descriptions) {
+    query['description'] = { '$in': body.descriptions };
+    console.log('Desc');
+    console.log(body.descriptions);
   }
 
   console.log(query);
 
   const enrichments = await KeggService.findModelsByQuery(query, {}, 5000);
 
-  const intQuery = {
+  const intQuery: any = {
     gene: { '$in': body.genes},
     pathogenProtein: { '$in': body.pathogenProteins },
     pathogen: body.pathogen,
@@ -56,7 +62,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
   return res.json({success: true, payload: {enrichments, interactions}});
 };
 
-export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
+export const getKeggAnnotationsRoute = async (req: Request, res: Response) => {
   const cachedAnnotations = cache.get('keggDesc');
 
   if (cachedAnnotations) {

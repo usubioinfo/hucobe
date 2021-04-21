@@ -94,3 +94,13 @@ export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
 
   return res.json({success: true, payload: annotations});
 }
+
+export const searchGoAnnotationsRoute = async (req: Request, res: Response) => {
+  const body = req.body;
+
+  const query = { '$text': { '$search': body.searchTerms } };
+
+  let terms = await GoService.findModelsByQuery(query, {}, 60);
+
+  return res.json({success: true, payload: terms});
+}
