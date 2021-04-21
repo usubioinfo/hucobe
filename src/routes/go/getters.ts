@@ -25,12 +25,16 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
   let result = await ResultService.findOneModelByQuery({_id: req.body.expId}) as IResult;
   const time0 = performance.now();
 
-  const query = {
+  const query: any = {
     pathogen: body.pathogen,
     interactionCategory: body.interactionCategory,
     genes: { '$in': body.genes },
     category: { '$in': body.goTerms }
   };
+
+  if (body.descriptions) {
+    query['description'] = { '$in': body.descriptions };
+  }
 
   console.log(query);
 
