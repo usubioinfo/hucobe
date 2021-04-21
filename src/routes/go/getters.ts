@@ -98,7 +98,7 @@ export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
 export const searchGoAnnotationsRoute = async (req: Request, res: Response) => {
   const body = req.body;
 
-  let query = { '$text': { '$search': body.searchTerms, '$caseSensitive': false } };
+  let query = { '$text': { '$search': `${body.searchTerms}`, '$caseSensitive': false } };
 
   let results = await GoService.findModelsByQuery(query, {}, 100) as IGoEnrichment[];
   console.log(results);
