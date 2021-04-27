@@ -5,7 +5,6 @@ import GoService from '@services/go-enrichment.service';
 import { IGoEnrichment } from '@models/go-enrichment.model';
 
 import InteractionService from '@services/interaction.service';
-import { IInteraction } from '@models/interaction.model';
 
 import ResultService from '@services/result.service';
 import { IResult } from '@models/result.model';
@@ -28,7 +27,7 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
   const query: any = {
     pathogen: body.pathogen,
     interactionCategory: body.interactionCategory,
-    genes: { '$in': body.genes },
+    gene: { '$in': body.genes },
     category: { '$in': body.goTerms }
   };
 

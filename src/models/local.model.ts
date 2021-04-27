@@ -5,5 +5,6 @@ export interface ILocal extends Document {
   interactions: string,
   gene: string,
   geneId: string,
-  location: string
+  location: string,
+  pathogen: string
 }

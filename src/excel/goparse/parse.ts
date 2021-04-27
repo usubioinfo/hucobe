@@ -40,9 +40,6 @@ export const createSuppData = async () => {
   });
 
   mfResults = [...new Set(mfResults)];
-
-  console.log('TEST');
-  console.log(mfResults);
 }
 
 export const readExcelGo = async (fileName: string, sheet: number) => {
@@ -102,34 +99,41 @@ export const readExcelGo = async (fileName: string, sheet: number) => {
     for (let i = 1; i < 10; i++) {
       const key = goEnrichmentDict[i];
 
+      if (!key) {
+        continue;
+      }
+
       obj[key] = currentRow.getCell(i).value;
     }
 
     obj['category'] = '';
     obj['genes'] = [];
 
-    enrichment = new GoEnrichment(obj);
-    enrichment.pathogen = enrichmentInfo.virus;
-    enrichment.pathogen = enrichment.pathogen.toLowerCase();
-    enrichment.genes = enrichment.geneId.split('/');
-    enrichment.interactionCategory = enrichmentInfo.interactionCategory;
+    const genes = obj['geneId'].split('/');
 
-    if (!enrichment.geneRatio.includes('/')) {
-      enrichment.geneRatio = '###';
+    for (let gene of genes) {
+      enrichment = new GoEnrichment(obj);
+      enrichment.pathogen = enrichmentInfo.virus;
+      enrichment.pathogen = enrichment.pathogen.toLowerCase();
+      enrichment.interactionCategory = enrichmentInfo.interactionCategory;
+
+      if (!enrichment.geneRatio.includes('/')) {
+        enrichment.geneRatio = '###';
+      }
+
+      if (bpResults.includes(enrichment.goId)) {
+        enrichment.category = 'biopathway';
+      } else if (ccResults.includes(enrichment.goId)) {
+        enrichment.category = 'cellcomp';
+      } else if (mfResults.includes(enrichment.goId)) {
+        enrichment.category = 'molecfunction';
+      }
+
+      enrichment.gene = gene;
+      console.log(enrichment);
+      await GoEnrichmentService.saveModel(enrichment);
     }
 
-    if (bpResults.includes(enrichment.goId)) {
-      enrichment.category = 'biopathway';
-    } else if (ccResults.includes(enrichment.goId)) {
-      enrichment.category = 'cellcomp';
-    } else if (mfResults.includes(enrichment.goId)) {
-      enrichment.category = 'molecfunction';
-    }
-
-    await GoEnrichmentService.saveModel(enrichment);
-    // GoEnrichmentService.saveModel(expression).then(result => console.log(result));
-
-    console.log(enrichment);
     console.log(rowIndex);
 
     rowIndex += 1;

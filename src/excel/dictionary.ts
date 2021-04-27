@@ -2,6 +2,7 @@ import { readExcelInt } from './intparse/parse';
 import { readExcelGo } from './goparse/parse';
 import { readExcelKegg } from './keggparse/parse';
 import { readExcelTissue } from './tissueparse/parse';
+import { readExcelLocal } from './localparse/parse';
 
 
 type TissueExpInfo = {
@@ -80,5 +81,14 @@ export const parseDict: Record<string, (fileName: string, sheet: number) => Prom
   'GO_Enrichment.xlsx': readExcelGo,
   'KEGG_Enrichment.xlsx': readExcelKegg,
   'Interactions.xlsx': readExcelInt,
-  'TissueExpressions.xlsx': readExcelTissue
+  'TissueExpressions.xlsx': readExcelTissue,
+  'Host_Subcellular_localization.xlsx': readExcelLocal
+}
+
+export const argDict: Record<string, string> = {
+  'go': 'GO_Enrichment.xlsx',
+  'kegg': 'KEGG_Enrichment.xlsx',
+  'int': 'Interactions.xlsx',
+  'tissue': 'TissueExpressions.xlsx',
+  'local': 'Host_Subcellular_localization.xlsx'
 }

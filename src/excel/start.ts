@@ -3,12 +3,20 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 
-import { parseDict } from './dictionary';
+import { parseDict, argDict } from './dictionary';
 
 dotenv.config();
 require('dotenv-defaults/config');
 
-const FILE = process.env.FILE as string;
+if (process.argv.length < 3) {
+  console.log('Need an argument!');
+  process.exit(1);
+}
+
+const arg = process.argv[2];
+
+const FILE = argDict[arg];
+console.log(`Using ${FILE}`);
 
 const db = `mongodb://localhost:27017/${process.env.DB_NAME}`;
 

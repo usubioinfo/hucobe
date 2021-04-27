@@ -6,7 +6,8 @@ const LocalSchema: Schema = new Schema({
 	interactions: {type: String, required: true},
 	gene: {type: String, required: true},
 	geneId: {type: String, required: true},
-	location: {type: String, required: true}
+	location: {type: String, required: true},
+	pathogen: {type: String, required: true}
 },{
 	minimize: false
 });
