@@ -83,7 +83,7 @@ export const getKeggAnnotationsRoute = async (req: Request, res: Response) => {
   console.log(`Caching KEGG annotations.`);
 
   cache.put('keggDesc', annotations.join(','), CACHE_TIME, async () => {
-    let annotations = await KeggService.getDistinct('tissueExpression');
+    let annotations = await KeggService.getDistinct('description');
 
     annotations = annotations.filter((item: string |  null) => {
       if (item) {

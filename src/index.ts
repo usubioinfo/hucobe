@@ -86,6 +86,7 @@ app.use(API_BASE + 'expression', Routes.ExpressionRoutes);
 app.use(API_BASE + 'go', Routes.GoRoutes);
 app.use(API_BASE + 'results', Routes.ResultRoutes);
 app.use(API_BASE + 'kegg', Routes.KeggRoutes);
+app.use(API_BASE + 'local', Routes.LocalRoutes);
 
 app.get(API_BASE, (req: Request, res: Response) => {
   res.status(404).send('<h1 style="color: blue; text-align: center;">404 Error</h1>');

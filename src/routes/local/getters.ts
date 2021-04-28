@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 
 import { Request, Response } from 'express';
 import GoService from '@services/go-enrichment.service';
-import { IGoEnrichment } from '@models/go-enrichment.model';
+
+import LocalService from '@services/local.service';
+import { ILocal } from '@models/local.model';
 
 import InteractionService from '@services/interaction.service';
 
@@ -17,7 +19,7 @@ require('dotenv-defaults/config');
 
 const CACHE_TIME = parseInt((process.env.ANNOTATION_CACHE_TIME as string));
 
-export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
+export const getLocalRoute = async (req: Request, res: Response) => {
   const body = req.body;
   console.log(body);
 
@@ -63,15 +65,16 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
   return res.json({success: true, payload: {enrichments, interactions}});
 }
 
-export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
-  const cachedAnnotations = cache.get('goDesc');
+export const getLocalAnnotationsRoute = async (req: Request, res: Response) => {
+  const cacheKey = 'localDesc';
+  const cachedAnnotations = cache.get(cacheKey);
 
   if (cachedAnnotations) {
-    console.log(`Received cached GO annotations.`);
+    console.log(`Received cached Local annotations.`);
     return res.json({success: true, payload: cachedAnnotations.split(',')});
   }
 
-  let annotations = await GoService.getDistinct('description');
+  let annotations = await LocalService.getDistinct('location');
 
   annotations = annotations.filter((item: string |  null) => {
     if (item) {
@@ -81,10 +84,10 @@ export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
     return false;
   });
 
-  console.log(`Caching GO annotations.`);
+  console.log(`Caching Local annotations.`);
 
-  cache.put('goDesc', annotations.join(','), CACHE_TIME, async () => {
-    let annotations = await GoService.getDistinct('description');
+  cache.put(cacheKey, annotations.join(','), CACHE_TIME, async () => {
+    let annotations = await LocalService.getDistinct('location');
 
     annotations = annotations.filter((item: string |  null) => {
       if (item) {
@@ -96,22 +99,4 @@ export const getGoAnnotationsRoute = async (req: Request, res: Response) => {
   });
 
   return res.json({success: true, payload: annotations});
-}
-
-export const searchGoAnnotationsRoute = async (req: Request, res: Response) => {
-  const body = req.body;
-
-  let query = { '$text': { '$search': `${body.searchTerms}`, '$caseSensitive': false } };
-
-  let results = await GoService.findModelsByQuery(query, {}, 100) as IGoEnrichment[];
-  console.log(results);
-  let terms = results.map(enrichment => {
-    return `${enrichment.goId} - ${enrichment.description}`;
-  });
-
-  terms = [...new Set(terms)];
-
-  console.log(terms);
-
-  return res.json({success: true, payload: terms});
 }

@@ -34,6 +34,7 @@ mongoose.connection.on('error', (err: any) => {
 
 const dataPath = path.resolve('hdata');
 
+// Parsing local will crash, and that's okay, it still gets all the data. The for loop just needs to be 3 instead of 7
 const readAllExcel = async () => {
   for (let i = 0; i < 7; i++) {
     await parseDict[FILE](`${dataPath}/${FILE}`, i);

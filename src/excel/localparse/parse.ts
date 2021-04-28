@@ -49,7 +49,7 @@ export const readExcelLocal = async (fileName: string, sheet: number) => {
     enrichment.pathogen = pathogen;
     enrichment.pathogen = enrichment.pathogen.toLowerCase();
 
-    // await LocalService.saveModel(enrichment);
+    await LocalService.saveModel(enrichment);
 
     console.log(enrichment);
     console.log(rowIndex);
