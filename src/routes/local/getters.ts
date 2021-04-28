@@ -28,18 +28,16 @@ export const getLocalRoute = async (req: Request, res: Response) => {
 
   const query: any = {
     pathogen: body.pathogen,
-    interactionCategory: body.interactionCategory,
-    gene: { '$in': body.genes },
-    category: { '$in': body.goTerms }
+    gene: { '$in': body.genes }
   };
 
-  if (body.descriptions) {
-    query['description'] = { '$in': body.descriptions };
+  if (body.locations) {
+    query['location'] = { '$in': body.locations };
   }
 
   console.log(query);
 
-  const enrichments = await GoService.findModelsByQuery(query, {}, 19000);
+  const enrichments = await LocalService.findModelsByQuery(query, {}, 19000);
 
   const intQuery = {
     gene: { '$in': body.genes},
