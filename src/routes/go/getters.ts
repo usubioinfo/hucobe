@@ -39,6 +39,8 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
 
   const enrichments = await GoService.findModelsByQuery(query, {}, 19000);
 
+  console.log(enrichments);
+
   const intQuery = {
     gene: { '$in': body.genes},
     pathogenProtein: { '$in': body.pathogenProteins },
