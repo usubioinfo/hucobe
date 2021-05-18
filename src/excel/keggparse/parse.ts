@@ -1,10 +1,26 @@
 import Excel from 'exceljs';
+import path from 'path';
+import sql from 'sqlite3';
+import { open, Database } from 'sqlite';
+
+const dataPath = path.resolve('hdata');
 
 import { IKeggEnrichment } from '@models/kegg-enrichment.model';
 import KeggEnrichmentService from '@services/kegg-enrichment.service';
 import { KeggEnrichment } from '@schemas/kegg-enrichment.schema';
 
 import { keggEnrichmentDict, sheetDict } from '@excel/dictionary';
+
+let db: Database;
+
+export const translateGenes = async () => {
+  db = await open({filename: `${dataPath}/hs.sqlite`, driver: sql.Database});
+  let genesInfo = await db.all('SELECT * FROM genes');
+
+  genesInfo.forEach(item => {
+    console.log(item);
+  });
+}
 
 export const readExcelKegg = async (fileName: string, sheet: number) => {
   const workbook = new Excel.Workbook();
