@@ -1,4 +1,4 @@
-import { translateGenes } from './keggparse/parse';
+import { translateGenes } from './keggparse/test';
 
 (async () => {
   await translateGenes();
