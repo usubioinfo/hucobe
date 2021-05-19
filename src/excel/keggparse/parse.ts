@@ -32,13 +32,10 @@ export const translateGenes = async () => {
   });
 
   for (const item of combined) {
-    console.log(item);
     const query = {
       genes: { '$in': [item.geneId] }
     };
-    console.log(query);
-    const foundItem = await KeggEnrichmentService.findModelsByQuery(query);
-    console.log(foundItem);
+    // const foundItem = await KeggEnrichmentService.findModelsByQuery(query);
     IdDict[item.geneId] = item.geneName;
   }
 }
