@@ -34,7 +34,7 @@ export const translateGenes = async () => {
     const query = {
       genes: { '$in': [item.geneId]}
     };
-    const foundItem = KeggEnrichmentService.findModelsByQuery(query);
+    const foundItem = await KeggEnrichmentService.findModelsByQuery(query);
     console.log(foundItem);
   });
 }
