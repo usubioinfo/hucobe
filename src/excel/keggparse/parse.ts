@@ -39,10 +39,14 @@ export const translateGenes = async () => {
     console.log(query);
     const foundItem = await KeggEnrichmentService.findModelsByQuery(query);
     console.log(foundItem);
+    IdDict[item.geneId] = item.geneName;
   }
 }
 
 export const readExcelKegg = async (fileName: string, sheet: number) => {
+
+  await translateGenes();
+
   const workbook = new Excel.Workbook();
   await workbook.xlsx.readFile(fileName);
 
@@ -80,7 +84,7 @@ export const readExcelKegg = async (fileName: string, sheet: number) => {
 
     for (let gene of genes) {
       enrichment = new KeggEnrichment(obj);
-      enrichment.gene = gene;
+      enrichment.gene = IdDict[gene];
       enrichment.pathogen = enrichmentInfo.virus;
       enrichment.pathogen = enrichment.pathogen.toLowerCase();
       enrichment.interactionCategory = enrichmentInfo.interactionCategory;
