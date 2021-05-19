@@ -37,6 +37,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
   console.log(query);
 
   const enrichments = await KeggService.findModelsByQuery(query, {}, 5000);
+  console.log(enrichments);
 
   const intQuery: any = {
     gene: { '$in': body.genes},
