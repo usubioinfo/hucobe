@@ -1,10 +1,8 @@
 import dotenv from 'dotenv';
 
 import { Request, Response } from 'express';
-import GoService from '@services/go-enrichment.service';
 
 import LocalService from '@services/local.service';
-import { ILocal } from '@models/local.model';
 
 import InteractionService from '@services/interaction.service';
 
@@ -53,10 +51,48 @@ export const getLocalRoute = async (req: Request, res: Response) => {
     return res.status(500).json({success: false, msg: 'Request failed'});
   }
 
+  const sendData: any[] = [];
+  for (let enrichment of enrichments) {
+    let interaction = interactions.find(int => {
+      console.log(int)
+      console.log(int.gene);
+      console.log(enrichment.gene);
+      return int.gene === enrichment.gene;
+    });
+
+    if (interaction) {
+      sendData.push({
+        pathogenProtein : interaction.pathogenProtein,
+      	isolate : interaction.isolate,
+      	pLength : interaction.pLength,
+      	hLength : interaction.hLength,
+      	interactionType : interaction.interactionType,
+        gene: enrichment.gene,
+        _id: enrichment._id,
+        host: enrichment.host,
+        location: enrichment.location,
+        pathogen: enrichment.pathogen
+      });
+    } else {
+      sendData.push({
+        pathogenProtein : '',
+      	isolate : '',
+      	pLength : 0,
+      	hLength : 0,
+      	interactionType : '',
+        gene: enrichment.gene,
+        _id: enrichment._id,
+        host: enrichment.host,
+        location: enrichment.location,
+        pathogen: enrichment.pathogen
+      });
+    }
+  }
+
   const time1 = performance.now();
 
   result.reqTime = time1 - time0;
-  result.results = enrichments;
+  result.results = sendData;
 
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
 
