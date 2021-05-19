@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 
 import { Request, Response } from 'express';
+import { IKeggEnrichment } from '@models/kegg-enrichment.model';
+import { IInteraction } from '@models/interaction.model';
 import KeggService from '@services/kegg-enrichment.service';
 
 import InteractionService from '@services/interaction.service';
@@ -46,6 +48,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
     interactionCategory: body.interactionCategory,
     interactionType: {'$in': body.interactionType}
   }
+
   console.log(intQuery);
 
   const interactions = await InteractionService.findModelsByQuery(intQuery, {}, 19000);
@@ -55,14 +58,34 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
     return res.status(500).json({success: false, msg: 'Request failed'});
   }
 
+  const sendData: any[] = [];
+  for (let enrichment of enrichments) {
+    let interaction = interactions.find(int => {
+      int.gene === enrichment.gene;
+    });
+
+    if (interaction) {
+      sendData.push({...interaction, ...enrichment});
+    } else {
+      sendData.push({
+        pathogenProtein : '',
+      	isolate : '',
+      	pLength : 0,
+      	hLength : 0,
+      	interactionType : '',
+        ...enrichment
+      });
+    }
+  }
+
   const time1 = performance.now();
 
   result.reqTime = time1 - time0;
-  result.results = enrichments;
+  result.results = sendData;
 
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
 
-  return res.json({success: true, payload: {enrichments, interactions}});
+  return res.json({success: true, payload: {enrichments, interactions, sendData}});
 };
 
 export const getKeggAnnotationsRoute = async (req: Request, res: Response) => {
