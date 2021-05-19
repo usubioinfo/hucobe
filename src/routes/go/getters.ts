@@ -55,10 +55,50 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
     return res.status(500).json({success: false, msg: 'Request failed'});
   }
 
+  const sendData: any[] = [];
+  for (let enrichment of enrichments) {
+    let interaction = interactions.find(int => {
+      console.log(int)
+      console.log(int.gene);
+      console.log(enrichment.gene);
+      return int.gene === enrichment.gene;
+    });
+
+    if (interaction) {
+      sendData.push({
+        pathogenProtein : interaction.pathogenProtein,
+      	isolate : interaction.isolate,
+      	pLength : interaction.pLength,
+      	hLength : interaction.hLength,
+      	interactionType : interaction.interactionType,
+        gene: enrichment.gene,
+        _id: enrichment._id,
+        goId: enrichment.goId,
+        description: enrichment.description,
+        pathogen: enrichment.pathogen,
+        interactionCategory: enrichment.interactionCategory
+      });
+    } else {
+      sendData.push({
+        pathogenProtein : '',
+      	isolate : '',
+      	pLength : 0,
+      	hLength : 0,
+      	interactionType : '',
+        gene: enrichment.gene,
+        _id: enrichment._id,
+        goId: enrichment.goId,
+        description: enrichment.description,
+        pathogen: enrichment.pathogen,
+        interactionCategory: enrichment.interactionCategory
+      });
+    }
+  }
+
   const time1 = performance.now();
 
   result.reqTime = time1 - time0;
-  result.results = enrichments;
+  result.results = sendData;
 
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
 

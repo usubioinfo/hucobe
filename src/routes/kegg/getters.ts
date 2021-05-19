@@ -1,8 +1,6 @@
 import dotenv from 'dotenv';
 
 import { Request, Response } from 'express';
-import { IKeggEnrichment } from '@models/kegg-enrichment.model';
-import { IInteraction } from '@models/interaction.model';
 import KeggService from '@services/kegg-enrichment.service';
 
 import InteractionService from '@services/interaction.service';
