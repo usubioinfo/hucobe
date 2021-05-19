@@ -68,7 +68,14 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
     });
 
     if (interaction) {
-      sendData.push({...interaction, ...enrichment});
+      sendData.push({
+        pathogenProtein : interaction.pathogenProtein,
+      	isolate : interaction.isolate,
+      	pLength : interaction.pLength,
+      	hLength : interaction.hLength,
+      	interactionType : interaction.interactionType, 
+        ...enrichment
+      });
     } else {
       sendData.push({
         pathogenProtein : '',
