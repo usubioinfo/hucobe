@@ -90,7 +90,7 @@ export const readExcelKegg = async (fileName: string, sheet: number) => {
         enrichment.geneRatio = '###';
       }
 
-      // await KeggEnrichmentService.saveModel(enrichment);
+      await KeggEnrichmentService.saveModel(enrichment);
       // KeggEnrichmentService.saveModel(expression).then(result => console.log(result));
 
       console.log(enrichment);
