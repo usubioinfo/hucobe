@@ -29,7 +29,7 @@ export const translateGenes = async () => {
     combined.push(newObj);
   });
 
-  combined.forEach(item => {
+  combined.forEach(async (item) => {
     console.log(item);
     const query = {
       genes: { '$in': [item.geneId]}
