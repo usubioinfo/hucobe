@@ -49,10 +49,10 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
     interactionType: {'$in': body.interactionType}
   }
 
-  console.log(intQuery);
+  // console.log(intQuery);
 
   const interactions = await InteractionService.findModelsByQuery(intQuery, {}, 19000);
-  console.log(interactions);
+  // console.log(interactions);
 
   if (!enrichments || !interactions) {
     return res.status(500).json({success: false, msg: 'Request failed'});
@@ -61,6 +61,9 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
   const sendData: any[] = [];
   for (let enrichment of enrichments) {
     let interaction = interactions.find(int => {
+      console.log(int)
+      console.log(int.gene);
+      console.log(enrichment.gene);
       int.gene === enrichment.gene;
     });
 
