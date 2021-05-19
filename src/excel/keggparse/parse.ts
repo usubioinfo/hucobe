@@ -32,8 +32,9 @@ export const translateGenes = async () => {
   for (const item of combined) {
     console.log(item);
     const query = {
-      genes: { '$in': [item.geneId]}
+      genes: { '$in': [item.geneId] }
     };
+    console.log(query);
     const foundItem = await KeggEnrichmentService.findModelsByQuery(query);
     console.log(foundItem);
   }
