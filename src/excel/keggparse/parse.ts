@@ -79,6 +79,7 @@ export const readExcelKegg = async (fileName: string, sheet: number) => {
     let genes = [];
 
     if (obj['geneId']) {
+      console.log(obj['geneId']);
       genes = obj['geneId'].split('/');
     }
 
