@@ -13,6 +13,8 @@ import { keggEnrichmentDict, sheetDict } from '@excel/dictionary';
 
 let db: Database;
 
+let IdDict: Record<string, string> = {};
+
 export const translateGenes = async () => {
   db = await open({filename: `${dataPath}/hs.sqlite`, driver: sql.Database});
   let genesInfo = await db.all('SELECT * FROM genes');
@@ -67,26 +69,32 @@ export const readExcelKegg = async (fileName: string, sheet: number) => {
     const currentRow = workbook.worksheets[sheet].getRow(rowIndex);
     const obj: any = {};
     obj['genes'] = [];
+    obj['gene'] = '';
     for (let i = 1; i < 10; i++) {
       const key = keggEnrichmentDict[i];
 
       obj[key] = currentRow.getCell(i).value;
     }
 
-    enrichment = new KeggEnrichment(obj);
-    enrichment.pathogen = enrichmentInfo.virus;
-    enrichment.pathogen = enrichment.pathogen.toLowerCase();
-    enrichment.genes = enrichment.geneId.split('/');
-    enrichment.interactionCategory = enrichmentInfo.interactionCategory;
+    const genes = obj['geneId'].split('/');
 
-    if (!enrichment.geneRatio.includes('/')) {
-      enrichment.geneRatio = '###';
+    for (let gene of genes) {
+      enrichment = new KeggEnrichment(obj);
+      enrichment.gene = gene;
+      enrichment.pathogen = enrichmentInfo.virus;
+      enrichment.pathogen = enrichment.pathogen.toLowerCase();
+      enrichment.interactionCategory = enrichmentInfo.interactionCategory;
+
+      if (!enrichment.geneRatio.includes('/')) {
+        enrichment.geneRatio = '###';
+      }
+
+      // await KeggEnrichmentService.saveModel(enrichment);
+      // KeggEnrichmentService.saveModel(expression).then(result => console.log(result));
+
+      console.log(enrichment);
     }
 
-    await KeggEnrichmentService.saveModel(enrichment);
-    // KeggEnrichmentService.saveModel(expression).then(result => console.log(result));
-
-    console.log(enrichment);
     console.log(rowIndex);
 
     rowIndex += 1;

@@ -9,8 +9,7 @@ export interface IKeggEnrichment extends Document {
   pVal: string,
   pAdjust: string,
   qVal: string,
-  geneId: string,
+  gene: string,
   count: number,
-  genes: string[],
   interactionCategory: string
 }
