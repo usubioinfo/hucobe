@@ -76,8 +76,11 @@ export const readExcelKegg = async (fileName: string, sheet: number) => {
 
       obj[key] = currentRow.getCell(i).value;
     }
+    let genes = [];
 
-    const genes = obj['geneId'].split('/');
+    if (obj['geneId']) {
+      genes = obj['geneId'].split('/');
+    }
 
     for (let gene of genes) {
       enrichment = new KeggEnrichment(obj);
