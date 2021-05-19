@@ -64,7 +64,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
       console.log(int)
       console.log(int.gene);
       console.log(enrichment.gene);
-      int.gene === enrichment.gene;
+      return int.gene === enrichment.gene;
     });
 
     if (interaction) {
