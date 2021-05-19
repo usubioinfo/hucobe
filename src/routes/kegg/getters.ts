@@ -73,8 +73,13 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
       	isolate : interaction.isolate,
       	pLength : interaction.pLength,
       	hLength : interaction.hLength,
-      	interactionType : interaction.interactionType, 
-        ...enrichment
+      	interactionType : interaction.interactionType,
+        gene: enrichment.gene,
+        _id: enrichment._id,
+        keggId: enrichment.keggId,
+        description: enrichment.description,
+        pathogen: enrichment.pathogen,
+        interactionCategory: enrichment.interactionCategory
       });
     } else {
       sendData.push({
@@ -83,7 +88,12 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
       	pLength : 0,
       	hLength : 0,
       	interactionType : '',
-        ...enrichment
+        gene: enrichment.gene,
+        _id: enrichment._id,
+        keggId: enrichment.keggId,
+        description: enrichment.description,
+        pathogen: enrichment.pathogen,
+        interactionCategory: enrichment.interactionCategory
       });
     }
   }
