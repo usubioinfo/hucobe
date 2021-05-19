@@ -29,14 +29,14 @@ export const translateGenes = async () => {
     combined.push(newObj);
   });
 
-  combined.forEach(async (item) => {
+  for (const item of combined) {
     console.log(item);
     const query = {
       genes: { '$in': [item.geneId]}
     };
     const foundItem = await KeggEnrichmentService.findModelsByQuery(query);
     console.log(foundItem);
-  });
+  }
 }
 
 export const readExcelKegg = async (fileName: string, sheet: number) => {
