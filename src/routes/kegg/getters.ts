@@ -25,7 +25,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
   const query: any = {
     pathogen: body.pathogen,
     interactionCategory: body.interactionCategory,
-    genes: { '$in': body.genes }
+    gene: { '$in': body.genes }
   }
 
   if (body.descriptions) {
