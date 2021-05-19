@@ -16,9 +16,26 @@ let db: Database;
 export const translateGenes = async () => {
   db = await open({filename: `${dataPath}/hs.sqlite`, driver: sql.Database});
   let genesInfo = await db.all('SELECT * FROM genes');
+  let aliases = await db.all('SELECT * FROM alias');
 
-  genesInfo.forEach(item => {
+  let combined: any[] = [];
+
+  genesInfo.forEach((item, index) => {
+    const newObj = {
+      geneId: item.gene_id,
+      geneName: aliases[index].alias_symbol
+    };
+
+    combined.push(newObj);
+  });
+
+  combined.forEach(item => {
     console.log(item);
+    const query = {
+      genes: { '$in': [item.geneId]}
+    };
+    const foundItem = KeggEnrichmentService.findModelsByQuery(query);
+    console.log(foundItem);
   });
 }
 
