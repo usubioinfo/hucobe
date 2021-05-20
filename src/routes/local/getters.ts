@@ -62,7 +62,10 @@ export const getLocalRoute = async (req: Request, res: Response) => {
 
     if (interaction) {
       interactions = interactions.filter((int): boolean => {
-        return int.gene !== interaction.gene && int.pathogenProtein !== int.pathogenProtein;
+        if (!interaction) {
+          return false;
+        }
+        return int.gene !== interaction.gene && int.pathogenProtein !== interaction.pathogenProtein;
       });
 
       sendData.push({
