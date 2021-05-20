@@ -66,7 +66,7 @@ export const getLocalRoute = async (req: Request, res: Response) => {
       console.log('NEW');
       console.log(int);
       console.log(interaction);
-      return int.gene !== interaction.gene && int.pathogenProtein !== interaction.pathogenProtein;
+      return int.gene !== interaction.gene || int.pathogenProtein !== interaction.pathogenProtein;
     });
 
     if (interaction) {
