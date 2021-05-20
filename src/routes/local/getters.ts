@@ -45,7 +45,7 @@ export const getLocalRoute = async (req: Request, res: Response) => {
     interactionType: body.interactionType
   }
 
-  const interactions = await InteractionService.findModelsByQuery(intQuery, {}, 19000);
+  let interactions = await InteractionService.findModelsByQuery(intQuery, {}, 19000);
 
   if (!enrichments || !interactions) {
     return res.status(500).json({success: false, msg: 'Request failed'});
@@ -61,6 +61,10 @@ export const getLocalRoute = async (req: Request, res: Response) => {
     });
 
     if (interaction) {
+      interactions = interactions.filter((int): boolean => {
+        return int.gene !== interaction.gene && int.pathogenProtein !== int.pathogenProtein;
+      });
+
       sendData.push({
         pathogenProtein : interaction.pathogenProtein,
       	isolate : interaction.isolate,
