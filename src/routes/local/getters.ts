@@ -54,19 +54,20 @@ export const getLocalRoute = async (req: Request, res: Response) => {
   const sendData: any[] = [];
   for (let enrichment of enrichments) {
     let interaction = interactions.find(int => {
-      console.log(int)
-      console.log(int.gene);
-      console.log(enrichment.gene);
       return int.gene === enrichment.gene;
     });
 
+    interactions = interactions.filter((int): boolean => {
+      if (!interaction) {
+        return true;
+      }
+      console.log('NEW');
+      console.log(int);
+      console.log(interaction);
+      return int.gene !== interaction.gene && int.pathogenProtein !== interaction.pathogenProtein;
+    });
+
     if (interaction) {
-      interactions = interactions.filter((int): boolean => {
-        if (!interaction) {
-          return false;
-        }
-        return int.gene !== interaction.gene && int.pathogenProtein !== interaction.pathogenProtein;
-      });
 
       sendData.push({
         pathogenProtein : interaction.pathogenProtein,
