@@ -51,6 +51,8 @@ export const getLocalRoute = async (req: Request, res: Response) => {
     return res.status(500).json({success: false, msg: 'Request failed'});
   }
 
+  const oldInt = interactions;
+
   const sendData: any[] = [];
   for (let enrichment of enrichments) {
     let interaction = interactions.find(int => {
@@ -106,7 +108,7 @@ export const getLocalRoute = async (req: Request, res: Response) => {
 
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
 
-  return res.json({success: true, payload: {enrichments, interactions}});
+  return res.json({success: true, payload: {enrichments, interactions: oldInt}});
 }
 
 export const getLocalAnnotationsRoute = async (req: Request, res: Response) => {
