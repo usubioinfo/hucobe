@@ -82,7 +82,8 @@ export const getLocalRoute = async (req: Request, res: Response) => {
         host: enrichment.host,
         location: enrichment.location,
         pathogen: enrichment.pathogen,
-        interactions: enrichment.interactions
+        interactions: enrichment.interactions,
+        interactionCategory: interaction.interactionCategory
       });
     } else {
       sendData.push({
@@ -91,6 +92,7 @@ export const getLocalRoute = async (req: Request, res: Response) => {
       	pLength : 0,
       	hLength : 0,
       	interactionType : '',
+        interactionCategory: '',
         gene: enrichment.gene,
         _id: enrichment._id,
         host: enrichment.host,
