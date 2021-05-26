@@ -43,6 +43,9 @@ export const readExcelInt = async (fileName: string, sheet: number) => {
 
     interaction = new Interaction(obj);
     interaction.pathogen = interactionInfo.virus.toLowerCase();
+    if (interaction.isolate === 'australia') {
+      interaction.isolate = 'reference';
+    }
     interaction.interactionCategory = interactionInfo.interactionCategory;
     if (interaction.interactionType) {
       interaction.interactionType = interaction.interactionType.toLowerCase();
