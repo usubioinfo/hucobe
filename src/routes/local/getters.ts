@@ -63,9 +63,6 @@ export const getLocalRoute = async (req: Request, res: Response) => {
       if (!interaction) {
         return true;
       }
-      console.log('NEW');
-      console.log(int);
-      console.log(interaction);
       return int.gene !== interaction.gene || int.pathogenProtein !== interaction.pathogenProtein;
     });
 
@@ -85,21 +82,9 @@ export const getLocalRoute = async (req: Request, res: Response) => {
         interactions: enrichment.interactions,
         interactionCategory: interaction.interactionCategory
       });
-    } else {
-      sendData.push({
-        pathogenProtein : '',
-      	isolate : '',
-      	pLength : 0,
-      	hLength : 0,
-      	interactionType : '',
-        interactionCategory: '',
-        gene: enrichment.gene,
-        _id: enrichment._id,
-        host: enrichment.host,
-        location: enrichment.location,
-        pathogen: enrichment.pathogen,
-        interactions: enrichment.interactions
-      });
+
+      console.log('int');
+      console.log(interaction);
     }
   }
 
@@ -110,7 +95,9 @@ export const getLocalRoute = async (req: Request, res: Response) => {
 
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
 
-  return res.json({success: true, payload: {enrichments, interactions: oldInt}});
+  console.log(sendData);
+
+  return res.json({success: true, payload: {enrichments, interactions: sendData}});
 }
 
 export const getLocalAnnotationsRoute = async (req: Request, res: Response) => {
