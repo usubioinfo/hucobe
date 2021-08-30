@@ -16,6 +16,7 @@ let db: Database;
 let IdDict: Record<string, string> = {};
 
 export const translateGenes = async () => {
+  console.log('started');
   db = await open({filename: `${dataPath}/hs.sqlite`, driver: sql.Database});
   let genesInfo = await db.all('SELECT * FROM genes');
   let aliases = await db.all('SELECT * FROM alias');

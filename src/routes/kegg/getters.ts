@@ -34,7 +34,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
     console.log(body.descriptions);
   }
 
-  // console.log(query);
+  console.log(query);
 
   const enrichments = await KeggService.findModelsByQuery(query, {}, 5000);
   // console.log(enrichments);
@@ -102,6 +102,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
   result.results = sendData;
 
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
+  console.log(enrichments);
 
   return res.json({success: true, payload: {enrichments, interactions, sendData}});
 };
