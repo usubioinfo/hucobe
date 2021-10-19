@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts",
+    "start": "ts-node-dev --respawn src/index.ts",
     "prod": "NODE_ENV=PRODUCTION ts-node src/index.ts",
     "dev": "NODE_ENV=DEVTEST ts-node-dev src/index.ts --respawn",
     "excel": "ts-node src/excel/start.ts",
