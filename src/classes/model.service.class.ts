@@ -81,7 +81,7 @@ export class ModelService<P extends Document> {
     }
   }
 
-  public async findModelsByQuery(query: any, sort: any = {_id: 1}, limit: number = 30): Promise<P[] | null> {
+  public async findModelsByQuery(query: any, sort: any = {_id: 1}, limit: number = 400): Promise<P[] | null> {
     try {
       const foundModels = await this.HelperClass.find(query).sort(sort).limit(limit).exec();
       return foundModels;

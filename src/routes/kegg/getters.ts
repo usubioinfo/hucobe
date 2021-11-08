@@ -30,14 +30,11 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
 
   if (body.descriptions) {
     query['description'] = { '$in': body.descriptions };
-    console.log('Desc');
-    console.log(body.descriptions);
   }
 
   console.log(query);
 
   const enrichments = await KeggService.findModelsByQuery(query, {}, 5000);
-  // console.log(enrichments);
 
   const intQuery: any = {
     gene: { '$in': body.genes},
@@ -47,10 +44,19 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
     interactionType: {'$in': body.interactionType}
   }
 
-  console.log(intQuery);
-
   const interactions = await InteractionService.findModelsByQuery(intQuery, {}, 19000);
-  console.log(interactions);
+
+  const distinct = await KeggService.getDistinct('gene');
+
+  const testQuery = {
+    gene: {'$in': distinct},
+    interactionCategory: body.interactionCategory
+  }
+
+  // const testInt = await InteractionService.findModelsByQuery(testQuery, {}, 19000);
+  
+  console.log('Test')
+  // console.log(testInt);
 
   if (!enrichments || !interactions) {
     return res.status(500).json({success: false, msg: 'Request failed'});
@@ -58,7 +64,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
 
   const sendData: any[] = [];
   for (let enrichment of enrichments) {
-    // console.log(enrichment.gene);
+    console.log(enrichment.gene);
     let interaction = interactions.find(int => {
       console.log(int)
       console.log(int.gene);
@@ -73,20 +79,6 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
       	pLength : interaction.pLength,
       	hLength : interaction.hLength,
       	interactionType : interaction.interactionType,
-        gene: enrichment.gene,
-        _id: enrichment._id,
-        keggId: enrichment.keggId,
-        description: enrichment.description,
-        pathogen: enrichment.pathogen,
-        interactionCategory: enrichment.interactionCategory
-      });
-    } else {
-      sendData.push({
-        pathogenProtein : '',
-      	isolate : '',
-      	pLength : 0,
-      	hLength : 0,
-      	interactionType : '',
         gene: enrichment.gene,
         _id: enrichment._id,
         keggId: enrichment.keggId,

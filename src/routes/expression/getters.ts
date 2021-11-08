@@ -44,10 +44,36 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
     tissueExpression: {'$in': body.tissues}
   }
 
+  const testQuery = {
+    pathogen: body.pathogen,
+    pathogenProtein: {'$in': body.pathogenProteins},
+    interactionCategory: body.interactionCategory,
+    interactionType: {'$in': body.interactionType},
+    gene: {'$in': body.genes},
+    tissueExpression: {'$in': body.tissues}
+  }
+
+  console.log(query);
+
   const results = await ExpressionService.findModelsByQuery(query);
   if (results) {
     expressions.push(...results);
   }
+
+  const testRes = await ExpressionService.findModelsByQuery(testQuery);
+
+  const countMap: Record<string, number> = {
+    interolog: 0,
+    domain: 0,
+    both: 0
+  }
+
+  testRes?.forEach(item => {
+    countMap[item.interactionType] += 1;
+  });
+
+  console.log(countMap);
+
 
   const time1 = performance.now();
 
@@ -57,7 +83,7 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
 
   console.log('done')
-  console.log(expressions);
+  // console.log(expressions);
 
   if (expressions.length) {
     return res.status(200).json({success: true, payload: expressions});
