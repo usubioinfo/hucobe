@@ -55,7 +55,7 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
 
   console.log(query);
 
-  const results = await ExpressionService.findModelsByQuery(query);
+  const results = await ExpressionService.findModelsByQuery(query, {}, 19000);
   if (results) {
     expressions.push(...results);
   }
