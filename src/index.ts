@@ -51,7 +51,7 @@ const accessControl = (req: Request, res: Response, next: NextFunction) => {
 
 // Allows other domains to use this domain as an API
 const originsWhitelist = [
-  'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://localhost:4200'
+  'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://bioinfo.usu.edu'
 ];
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
@@ -66,7 +66,7 @@ const corsOptions: cors.CorsOptions = {
 }
 
 const cOpt: cors.CorsOptions = {
-  origin: 'http://localhost:4200',
+  origin: 'http://bioinfo.usu.edu',
   credentials: true
 }
 
