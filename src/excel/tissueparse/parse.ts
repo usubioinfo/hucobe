@@ -42,6 +42,9 @@ export const readExcelTissue = async (fileName: string, sheet: number) => {
     if (expression.isolate === 'australia') {
       expression.isolate = 'reference';
     }
+        if (interaction.isolate === 'autralia') {
+      interaction.isolate = 'reference';
+    }
     expression.pathogen = tissueInfo.virus;
     expression.interactionCategory = tissueInfo.interactionCategory;
     expression.interactionType = expression.interactionType.toLowerCase();
