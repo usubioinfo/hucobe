@@ -46,6 +46,9 @@ export const readExcelInt = async (fileName: string, sheet: number) => {
     if (interaction.isolate === 'australia') {
       interaction.isolate = 'reference';
     }
+    if (interaction.isolate === 'autralia') {
+      interaction.isolate = 'reference';
+    }
     interaction.interactionCategory = interactionInfo.interactionCategory;
     if (interaction.interactionType) {
       interaction.interactionType = interaction.interactionType.toLowerCase();
