@@ -17,7 +17,7 @@ export const sheetDict: Record<number, TissueExpInfo> = {
   3: {virus: 'SARS-CoV-2', interactionCategory: 'unique'},
   4: {virus: 'SARS-CoV', interactionCategory: 'unique'},
   5: {virus: 'MERS', interactionCategory: 'unique'},
-  6: {virus: 'N/A', interactionCategory: 'common'}
+  6: {virus: 'common', interactionCategory: 'common'}
 }
 
 export const localizationSheetDict: Record<number, string> = {
