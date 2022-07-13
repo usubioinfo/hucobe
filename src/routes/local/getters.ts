@@ -69,6 +69,7 @@ export const getLocalRoute = async (req: Request, res: Response) => {
     if (interaction) {
 
       sendData.push({
+        humanProtein : interaction.humanProtein,
         pathogenProtein : interaction.pathogenProtein,
       	isolate : interaction.isolate,
       	pLength : interaction.pLength,
@@ -80,7 +81,11 @@ export const getLocalRoute = async (req: Request, res: Response) => {
         location: enrichment.location,
         pathogen: enrichment.pathogen,
         interactions: enrichment.interactions,
-        interactionCategory: interaction.interactionCategory
+        interactionCategory: interaction.interactionCategory,
+        confidence: interaction.confidence,
+        hInteractor: interaction.hInteractor,
+        pInteractor: interaction.pInteractor,
+        publication: interaction.publication
       });
 
       console.log('int');

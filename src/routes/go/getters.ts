@@ -63,6 +63,7 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
 
     if (interaction) {
       sendData.push({
+        humanProtein : interaction.humanProtein,
         pathogenProtein : interaction.pathogenProtein,
       	isolate : interaction.isolate,
       	pLength : interaction.pLength,
@@ -73,7 +74,11 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
         goId: enrichment.goId,
         description: enrichment.description,
         pathogen: enrichment.pathogen,
-        interactionCategory: enrichment.interactionCategory
+        interactionCategory: enrichment.interactionCategory,
+        confidence: interaction.confidence,
+        hInteractor: interaction.hInteractor,
+        pInteractor: interaction.pInteractor,
+        publication: interaction.publication
       });
     } else {
       sendData.push({

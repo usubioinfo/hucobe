@@ -11,5 +11,8 @@ export interface IExpression extends Document {
   interactionCategory: string,
   confidence?:string,
   tissueExpression?: string,
-  pathogen?: string
+  pathogen?: string,
+  hInteractor?: string,
+  pInteractor?: string,
+  publication?: string,
 }

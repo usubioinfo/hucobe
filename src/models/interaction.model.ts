@@ -10,5 +10,8 @@ export interface IInteraction extends Document {
   pLength: string,
   interactionType: string,
   interactionCategory: string,
-  confidence: string
+  confidence: string,
+  hInteractor: string,
+  pInteractor: string,
+  publication: string,
 }

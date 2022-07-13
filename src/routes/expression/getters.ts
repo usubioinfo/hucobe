@@ -44,9 +44,11 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
     tissueExpression: {'$in': body.tissues}
   }
 
-  console.log(query);
+  // console.log(query);
 
   const results = await ExpressionService.findModelsByQuery(query, {}, 19000);
+
+  console.log(results)
   if (results) {
     expressions.push(...results);
   }

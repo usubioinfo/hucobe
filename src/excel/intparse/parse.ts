@@ -32,7 +32,7 @@ export const readExcelInt = async (fileName: string, sheet: number) => {
 
     const currentRow = workbook.worksheets[sheet].getRow(rowIndex);
     const obj: any = {};
-    const numKeys = 8;
+    const numKeys = 11;
     for (let i = 1; i < numKeys + 1; i++) {
       const key = interactionDict[i];
 

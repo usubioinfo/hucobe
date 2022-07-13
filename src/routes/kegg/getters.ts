@@ -74,6 +74,7 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
 
     if (interaction) {
       sendData.push({
+        humanProtein : interaction.humanProtein,
         pathogenProtein : interaction.pathogenProtein,
       	isolate : interaction.isolate,
       	pLength : interaction.pLength,
@@ -83,8 +84,13 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
         _id: enrichment._id,
         keggId: enrichment.keggId,
         description: enrichment.description,
+        fdr: enrichment.pAdjust,
         pathogen: enrichment.pathogen,
-        interactionCategory: enrichment.interactionCategory
+        interactionCategory: enrichment.interactionCategory,
+        confidence: interaction.confidence,
+        hInteractor: interaction.hInteractor,
+        pInteractor: interaction.pInteractor,
+        publication: interaction.publication
       });
     }
   }

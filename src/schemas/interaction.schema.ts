@@ -11,7 +11,10 @@ const InteractionSchema: Schema = new Schema({
 	pLength: {type: String, required: true},
 	interactionType: {type: String, required: true},
 	interactionCategory: {type: String, required: true},
-	confidence: {type: String, required: true}
+	confidence: {type: String, required: true},
+	hInteractor: {type: String, required: true},
+	pInteractor: {type: String, required: true},
+	publication: {type: String, required: true},
 },{
 	minimize: false
 });
