@@ -17,7 +17,7 @@ require('dotenv-defaults/config');
 
 const PORT = process.env.PORT;
 const API_BASE = '/';
-const db = `mongodb://localhost:27017/${process.env.DB_NAME}`;
+const db = `mongodb://127.0.0.1:27017/${process.env.DB_NAME}`;
 
 mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
@@ -34,7 +34,7 @@ mongoose.connection.on('error', (err: any) => {
 // CORS
 const accessControl = (req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins = [
-    'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://bioinfo.usu.edu'
+    'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://bioinfo.usu.edu', 'http://localhost:3500'
   ];
   const origin = req.headers.origin;
   /*
@@ -42,7 +42,8 @@ const accessControl = (req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   */
-  res.header('Access-Control-Allow-Origin', 'http://bioinfo.usu.edu');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3600');
+  // res.header('Access-Control-Allow-Origin', 'http://bioinfo.usu.edu');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, KBL-User-Agent');
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -51,7 +52,7 @@ const accessControl = (req: Request, res: Response, next: NextFunction) => {
 
 // Allows other domains to use this domain as an API
 const originsWhitelist = [
-  'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://bioinfo.usu.edu'
+  'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://bioinfo.usu.edu', 'http://localhost:3600'
 ];
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
@@ -66,7 +67,7 @@ const corsOptions: cors.CorsOptions = {
 }
 
 const cOpt: cors.CorsOptions = {
-  origin: 'http://bioinfo.usu.edu',
+  origin: 'http://localhost:35600',
   credentials: true
 }
 

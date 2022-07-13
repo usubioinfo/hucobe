@@ -18,7 +18,7 @@ const arg = process.argv[2];
 const FILE = argDict[arg];
 console.log(`Using ${FILE}`);
 
-const db = `mongodb://localhost:27017/${process.env.DB_NAME}`;
+const db = `mongodb://127.0.0.1:27017/${process.env.DB_NAME}`;
 
 mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
