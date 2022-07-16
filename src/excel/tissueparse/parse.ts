@@ -3,7 +3,6 @@ import Excel from 'exceljs';
 import { IExpression } from '@models/expression.model';
 import ExpressionService from '@services/expression.service';
 import { Expression } from '@schemas/expression.schema';
-
 import { tissueExpDict, sheetDict } from '@excel/dictionary';
 
 export const readExcelTissue = async (fileName: string, sheet: number) => {
@@ -12,6 +11,7 @@ export const readExcelTissue = async (fileName: string, sheet: number) => {
 
   let rowIndex = 1;
   const primaryColumn = workbook.worksheets[sheet].getColumn(1);
+
   const tissueInfo = sheetDict[sheet];
 
   let maxRowNum = 0;
@@ -32,19 +32,20 @@ export const readExcelTissue = async (fileName: string, sheet: number) => {
 
     const currentRow = workbook.worksheets[sheet].getRow(rowIndex);
     const obj: any = {};
-    for (let i = 1; i < 1; i++) {
+    for (let i = 1; i < 13; i++) {
       const key = tissueExpDict[i];
 
       obj[key] = currentRow.getCell(i).value;
     }
 
     expression = new Expression(obj);
-    if (expression.isolate === 'australia') {
-      expression.isolate = 'reference';
-    }
-        if (expression.isolate === 'autralia') {
-      expression.isolate = 'reference';
-    }
+    console.log(expression);
+    // if (expression.isolate === 'australia') {
+    //   expression.isolate = 'reference';
+    // }
+    //     if (expression.isolate === 'autralia') {
+    //   expression.isolate = 'reference';
+    // }
     expression.pathogen = tissueInfo.virus;
     expression.interactionCategory = tissueInfo.interactionCategory;
     expression.interactionType = expression.interactionType.toLowerCase();
@@ -53,7 +54,7 @@ export const readExcelTissue = async (fileName: string, sheet: number) => {
     await ExpressionService.saveModel(expression);
     // ExpressionService.saveModel(expression).then(result => console.log(result));
 
-    console.log(expression);
+    // console.log(expression);
 
     rowIndex += 1;
   }

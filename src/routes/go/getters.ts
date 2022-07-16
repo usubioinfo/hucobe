@@ -91,6 +91,7 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
         _id: enrichment._id,
         goId: enrichment.goId,
         description: enrichment.description,
+        fdr: enrichment.pAdjust,
         pathogen: enrichment.pathogen,
         interactionCategory: enrichment.interactionCategory
       });

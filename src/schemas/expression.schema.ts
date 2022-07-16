@@ -9,13 +9,14 @@ const ExpressionSchema: Schema = new Schema({
 	isolate: {type: String, required: false},
 	pLength: {type: Number, required: false},
 	interactionType: {type: String, required: true},
-	interactionCategory: {type: String, required: true},
-	confidence: {type: String, required: false},
-	tissueExpression: {type: String, required: false},
-	pathogen: {type: String, required: false},
 	hInteractor: {type: String, required: false},
 	pInteractor: {type: String, required: false},
-	publication: {type: String, required: false}
+	confidence: {type: String, required: false},
+	publication: {type: String, required: false},
+	interactionCategory: {type: String, required: true},
+	tissueExpression: {type: String, required: false},
+	pathogen: {type: String, required: false}
+	
 },{
 	minimize: false
 });
