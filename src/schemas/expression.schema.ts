@@ -12,6 +12,7 @@ const ExpressionSchema: Schema = new Schema({
 	confidence: {type: String, required: false},
 	hInteractor: {type: String, required: false},
 	pInteractor: {type: String, required: false},
+	
 	publication: {type: String, required: false},
 	interactionCategory: {type: String, required: true},
 	tissueExpression: {type: String, required: false},
