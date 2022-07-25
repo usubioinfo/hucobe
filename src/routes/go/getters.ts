@@ -60,7 +60,7 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
     let interaction = interactions.find(int => {
       // console.log(int)
       // console.log(int.gene);
-      console.log(enrichment.pAdjust);
+      // console.log(enrichment.pAdjust);
       return int.gene === enrichment.gene;
     });
 
