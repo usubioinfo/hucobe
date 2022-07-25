@@ -60,7 +60,7 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
     let interaction = interactions.find(int => {
       // console.log(int)
       // console.log(int.gene);
-      // console.log(enrichment.gene);
+      console.log(enrichment.pAdjust);
       return int.gene === enrichment.gene;
     });
 
@@ -76,6 +76,7 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
         _id: enrichment._id,
         goId: enrichment.goId,
         description: enrichment.description,
+        fdr: enrichment.pAdjust,
         pathogen: enrichment.pathogen,
         interactionCategory: enrichment.interactionCategory,
         confidence: interaction.confidence,

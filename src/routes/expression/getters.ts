@@ -48,7 +48,7 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
 
   const results = await ExpressionService.findModelsByQuery(query, {}, 19000);
 
-  console.log(results)
+  // console.log(results)
   if (results) {
     expressions.push(...results);
   }
@@ -57,6 +57,8 @@ export const getExpressionsByParamsRoute = async (req: Request, res: Response) =
 
   result.reqTime = time1 - time0;
   result.results = expressions;
+
+  console.log(result)
   
   await ResultService.saveChangedModel(result, ['reqTime', 'results']);
 
