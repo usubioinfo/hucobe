@@ -84,21 +84,21 @@ export const getGoEnrichmentRoute = async (req: Request, res: Response) => {
         pInteractor: interaction.pInteractor,
         publication: interaction.publication
       });
-    } else {
-      sendData.push({
-        pathogenProtein : '',
-      	isolate : '',
-      	pLength : 0,
-      	hLength : 0,
-      	interactionType : '',
-        gene: enrichment.gene,
-        _id: enrichment._id,
-        goId: enrichment.goId,
-        description: enrichment.description,
-        fdr: enrichment.pAdjust,
-        pathogen: enrichment.pathogen,
-        interactionCategory: enrichment.interactionCategory
-      });
+    // } else {
+    //   sendData.push({
+    //     pathogenProtein : '',
+    //   	isolate : '',
+    //   	pLength : 0,
+    //   	hLength : 0,
+    //   	interactionType : '',
+    //     gene: enrichment.gene,
+    //     _id: enrichment._id,
+    //     goId: enrichment.goId,
+    //     description: enrichment.description,
+    //     fdr: enrichment.pAdjust,
+    //     pathogen: enrichment.pathogen,
+    //     interactionCategory: enrichment.interactionCategory
+    //   });
     }
   }
 
