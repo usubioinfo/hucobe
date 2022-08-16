@@ -32,7 +32,7 @@ export const readExcelTissue = async (fileName: string, sheet: number) => {
 
     const currentRow = workbook.worksheets[sheet].getRow(rowIndex);
     const obj: any = {};
-    for (let i = 1; i < 13; i++) {
+    for (let i = 1; i < 16; i++) {
       const key = tissueExpDict[i];
 
       obj[key] = currentRow.getCell(i).value;

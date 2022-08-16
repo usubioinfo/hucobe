@@ -38,7 +38,10 @@ export const tissueExpDict: Record<number, string> = {
   9: 'hInteractor',
   10: 'pInteractor',
   11: 'publication',
-  12: 'tissueExpression'
+  12: 'tissueExpression',
+  13: 'method',
+  14: 'type',
+  15: 'intdb'
 }
 
 export const goEnrichmentDict: Record<number, string> = {
@@ -84,7 +87,10 @@ export const interactionDict: Record<number, string> = {
   8: 'confidence',
   9: 'hInteractor',
   10: 'pInteractor',
-  11: 'publication'
+  11: 'publication',
+  12: 'method',
+  13: 'type',
+  14: 'intdb'
 }
 
 export const parseDict: Record<string, (fileName: string, sheet: number) => Promise<void>> = {

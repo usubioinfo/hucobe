@@ -90,7 +90,10 @@ export const getKeggEnrichmentRoute = async (req: Request, res: Response) => {
         confidence: interaction.confidence,
         hInteractor: interaction.hInteractor,
         pInteractor: interaction.pInteractor,
-        publication: interaction.publication
+        publication: interaction.publication,
+        method:interaction.method,
+        type:interaction.type,
+        intdb:interaction.intdb
       });
     }
   }

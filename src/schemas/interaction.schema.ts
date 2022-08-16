@@ -15,6 +15,9 @@ const InteractionSchema: Schema = new Schema({
 	hInteractor: {type: String, required: true},
 	pInteractor: {type: String, required: true},
 	publication: {type: String, required: true},
+	method: {type: String, required:true},
+	type: {type: String, required:true},
+	intdb: {type: String, required:true}
 },{
 	minimize: false
 });

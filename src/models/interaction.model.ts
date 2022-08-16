@@ -14,4 +14,7 @@ export interface IInteraction extends Document {
   hInteractor: string,
   pInteractor: string,
   publication: string,
+  method:string,
+  type:string,
+  intdb:string
 }

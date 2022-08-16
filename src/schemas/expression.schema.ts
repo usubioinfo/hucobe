@@ -14,6 +14,9 @@ const ExpressionSchema: Schema = new Schema({
 	pInteractor: {type: String, required: false},
 	
 	publication: {type: String, required: false},
+	method: {type: String, required:true},
+	type: {type: String, required:true},
+	intdb: {type: String, required:true},
 	interactionCategory: {type: String, required: true},
 	tissueExpression: {type: String, required: false},
 	pathogen: {type: String, required: false}
