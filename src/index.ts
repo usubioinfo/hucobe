@@ -34,41 +34,32 @@ mongoose.connection.on('error', (err: any) => {
 // CORS
 const accessControl = (req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins = [
-    'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://bioinfo.usu.edu', 'http://localhost:3500', 'https://kaabil.net'
+    'http://127.0.0.1:4000', 
+    'http://localhost:4000', 
+    'http://127.0.0.1:4200', 
+    'http://bioinfo.usu.edu', 
+    'http://localhost:3500', 
+    'https://kaabil.net'
   ];
   const origin = req.headers.origin;
-  /*
-  if (origin && typeof origin === 'string' && allowedOrigins.indexOf(origin) > -1) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+
+  // Use this in the future to abstract yourself away from domain name changes.
+  // This would allow you to put the domain in the list above, or maybe even in a config
+  // file, and that would make it easier to change domain names.
+  if (typeof origin === 'string' && allowedOrigins.indexOf(origin) > -1) {
+    console.log(origin);
   }
-  */
+  
+
+  // The line below is what needs to be changed if you get a CORS error. Just make sure it reflects the URL where the API is being called from.
   res.header('Access-Control-Allow-Origin', 'https://kaabil.net');
-  // res.header('Access-Control-Allow-Origin', 'http://bioinfo.usu.edu');
+
+  // Check this if you ever need something other than GET and POST (like DELETE or PUT). Just make sure they're in there
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, KBL-User-Agent');
   res.header('Access-Control-Allow-Credentials', 'true');
+  
   return next();
-}
-
-// Allows other domains to use this domain as an API
-const originsWhitelist = [
-  'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://bioinfo.usu.edu', 'http://localhost:3600', 'https://kaabil.net'
-];
-const corsOptions: cors.CorsOptions = {
-  origin: (origin, callback) => {
-    if (origin && originsWhitelist.indexOf(origin) >= -1) {
-      return callback(null, true);
-    }
-
-    const error = new Error('CORS Error');
-
-    return callback(error, false);
-  }
-}
-
-const cOpt: cors.CorsOptions = {
-  origin: 'http://bioinfo.usu.edu',
-  credentials: true
 }
 
 const app = express();
