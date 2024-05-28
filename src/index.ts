@@ -34,7 +34,7 @@ mongoose.connection.on('error', (err: any) => {
 // CORS
 const accessControl = (req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins = [
-    'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://bioinfo.usu.edu', 'http://localhost:3500'
+    'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://bioinfo.usu.edu', 'http://localhost:3500', 'https://kaabil.net'
   ];
   const origin = req.headers.origin;
   /*
@@ -52,7 +52,7 @@ const accessControl = (req: Request, res: Response, next: NextFunction) => {
 
 // Allows other domains to use this domain as an API
 const originsWhitelist = [
-  'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://bioinfo.usu.edu', 'http://localhost:3600'
+  'http://127.0.0.1:4000', 'http://localhost:4000', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://bioinfo.usu.edu', 'http://localhost:3600', 'https://kaabil.net'
 ];
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
