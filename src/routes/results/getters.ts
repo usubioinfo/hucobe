@@ -5,7 +5,7 @@ import ResultService from '@services/result.service';
 export const getResultRoute = async (req: Request, res: Response) => {
   const resultId = req.params.id;
 
-  if (!resultId) {
+  if (!resultId || resultId == 'undefined') {
     return res.json({success: false, msg: 'Invalid ID!'});
   }
 
