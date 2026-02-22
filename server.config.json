@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "hbe",
+      "script": "npm",
+      "args": "run prod",
+      "autorestart": true,
+      "env": {
+        "NODE_ENV": "PRODUCTION",
+        "PORT": "3605"
+      }
+    }
+  ]
+}

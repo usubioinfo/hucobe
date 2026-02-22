@@ -38,7 +38,7 @@ const accessControl = (req: Request, res: Response, next: NextFunction) => {
     'http://localhost:4000', 
     'http://127.0.0.1:4200', 
     'http://bioinfo.usu.edu', 
-    'http://localhost:3500', 
+    'http://localhost:3605', 
     'https://kaabil.net'
   ];
   const origin = req.headers.origin;
